@@ -17,7 +17,7 @@ public class CardSO : ScriptableObject
     public int unlockLevel;
 }
 
-public enum CardEffect
+public enum CardEffect //efectos q puede tener la carta
 {
     DamageIncrease,
     HealthIncrease,

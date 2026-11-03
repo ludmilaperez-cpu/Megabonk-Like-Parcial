@@ -8,9 +8,9 @@ public class Card : MonoBehaviour, IPointerClickHandler
     [SerializeField] Image cardImageRenderer;
     [SerializeField] TextMeshProUGUI cardTextRenderer;
 
-    private CardSO cardInfo;
+    private CardSO cardInfo; //guarda info de carta
 
-    public void Setup(CardSO card)
+    public void Setup(CardSO card) //carta con imagen y el texto scriptableobject
     {
         cardInfo = card;
 
@@ -18,9 +18,9 @@ public class Card : MonoBehaviour, IPointerClickHandler
         cardTextRenderer.text = card.cardText;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData) //cuando el jugador hace click se eejcuta
     {
         Debug.Log("elegiste una carta");
-        CardManager.Instance.SelectCard(cardInfo);
+        CardManager.Instance.SelectCard(cardInfo); //avisa q carta se eligio
     }
 }
