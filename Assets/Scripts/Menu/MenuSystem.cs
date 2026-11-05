@@ -3,12 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MenuSystem : MonoBehaviour
 {
-    public void Play() 
+    [SerializeField] private GameObject panelSeguro;
+
+    public void Play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    [SerializeField] private GameObject panelSeguro;
-
     private void Start()
     {
         if (panelSeguro != null) panelSeguro.SetActive(false);
@@ -24,6 +24,14 @@ public class MenuSystem : MonoBehaviour
     public void Options() 
     {
         SceneManager.LoadScene("Options");
+    }
+    public void Store() 
+    {
+        SceneManager.LoadScene("Store");
+    }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
     public void Si()
     {
