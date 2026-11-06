@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: Unity.RemoteConfig.Editor::Unity.RemoteConfig.Editor.RemoteConfigDataStore
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b4441d5a-75d4-4f22-bbae-dbd2b2d311eb\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"TestKey\",\r\n      \"type\": \"bool\",\r\n     
+    \"value\": false\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b4441d5a-75d4-4f22-bbae-dbd2b2d311eb\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"TestKey\",\r\n      \"type\": \"bool\",\r\n     
+    \"value\": false\r\n    }\r\n  }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"0a367190-8d8e-4dcb-b1fe-1a5e54efb009\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"602534de-1882-4710-856f-277c84af8542\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2026-11-02T19:31:45Z\",\r\n    \"updatedAt\":
+    \"2026-11-02T19:31:45Z\"\r\n  }\r\n]"
