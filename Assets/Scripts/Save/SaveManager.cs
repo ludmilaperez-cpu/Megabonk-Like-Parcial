@@ -22,7 +22,18 @@ public class SaveManager
             return lastLoadedGameData;
         }
     }
-    public static string GetSavePath() 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void SubscribeToEvents()
+    {
+        EventManager.OnCoinsChanged -= SaveCoins;
+        EventManager.OnCoinsChanged += SaveCoins;
+    }
+    static void SaveCoins(float totalCoins)
+    {
+        LastLoadedGameData.coins = totalCoins;
+        Save();
+    }
+    public static string GetSavePath()
     {
         return string.Format("{0}/{1}", Application.persistentDataPath, SAVE_FILE_NAME);
     }

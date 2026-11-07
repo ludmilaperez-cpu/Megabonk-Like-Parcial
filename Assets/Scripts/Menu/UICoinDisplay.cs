@@ -9,22 +9,30 @@ public class UICoinDisplay : MonoBehaviour
     [Header("Debug")]
     [SerializeField] bool createDebugButton = true;
 
-    private void Start()
+    private void Awake()
     {
         displayTarget = GetComponent<TextMeshProUGUI>();
-        UpdateDisplay();
+    }
+    private void OnEnable()
+    {
+        EventManager.OnCoinsChanged += UpdateDisplay;
+        UpdateDisplay(SaveManager.LastLoadedGameData.coins);
+    }
+    private void OnDisable()
+    {
+        EventManager.OnCoinsChanged -= UpdateDisplay;
+    }
+    private void Start()
+    {
         if (createDebugButton) CreateDebugButton();
     }
-    public void UpdateDisplay()
+    public void UpdateDisplay(float coins)
     {
-        float coins = SaveManager.LastLoadedGameData.coins;
         displayTarget.text = Mathf.RoundToInt(coins).ToString();
     }
     public void AddCoin()
     {
-        SaveManager.LastLoadedGameData.coins += 1;
-        SaveManager.Save();
-        UpdateDisplay();
+        EventManager.RaiseCoinsChanged(SaveManager.LastLoadedGameData.coins + 1);
     }
 
     void CreateDebugButton()
