@@ -676,13 +676,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675203351}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21159452, y: -0.000000002022178, z: 4.3779444e-10, w: 0.97735757}
+  m_LocalRotation: {x: 0.21159452, y: -0.000000020748482, z: 0.0000000044919743, w: 0.97735757}
   m_LocalPosition: {x: 4.76, y: 2.0900002, z: -1.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &675203355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,6 +772,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   isCameraLocked: 0
+--- !u!1 &693411200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 693411202}
+  - component: {fileID: 693411201}
+  m_Layer: 0
+  m_Name: WaveSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &693411201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693411200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e969d19b63e933b479d43b833447811b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
+  player: {fileID: 990893866}
+  mainCamera: {fileID: 675203353}
+  spawnRadius: 20
+  waves:
+  - enemyPrefab: {fileID: -1352617246517922784, guid: 9942cba8534a86443b74662aaebffa54, type: 3}
+    enemyCount: 10
+    timeToNextEnemy: 2
+    timeToNextWave: 10
+    enemiesLeft: 0
+  - enemyPrefab: {fileID: -1352617246517922784, guid: 9942cba8534a86443b74662aaebffa54, type: 3}
+    enemyCount: 9
+    timeToNextEnemy: 2.38
+    timeToNextWave: 5.71
+    enemiesLeft: 0
+  currentWaveIndex: 0
+--- !u!4 &693411202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693411200}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.05937, y: 0, z: 3.25536}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &842510696
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +1007,7 @@ MonoBehaviour:
   _charController: {fileID: 990893868}
   _camera: {fileID: 675203354}
   controlMove: {fileID: 2059249118}
-  _speed: 5
+  _speed: 8
   turnSmoothTime: 0.1
   _gravityMultiplier: 1
 --- !u!143 &990893868
@@ -969,11 +1028,11 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1
+  m_Height: 0.8
   m_Radius: 0.15
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.2
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &1030453928
@@ -1530,7 +1589,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537631317}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2115945, y: -0.0000000018356444, z: -4.2380421e-10, w: 0.97735757}
+  m_LocalRotation: {x: 0.2115945, y: -0.00000002049559, z: 0.0000000033238743, w: 0.97735757}
   m_LocalPosition: {x: 4.76, y: 2.0900002, z: -1.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1606,7 +1665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.09
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1640,6 +1699,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
     - target: {fileID: 919132149155446097, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
       propertyPath: m_Name
       value: Furrita
@@ -1651,6 +1718,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1688,3 +1759,4 @@ SceneRoots:
   - {fileID: 538472161}
   - {fileID: 1280668823}
   - {fileID: 1117538426}
+  - {fileID: 693411202}
