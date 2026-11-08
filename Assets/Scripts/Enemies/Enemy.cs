@@ -1,39 +1,74 @@
 using UnityEngine;
 
+
+
+#region Strategy
+public interface IEnemyStrategy //Strategy, define comportamiento generico que ejecuta el enemigo
+
+{
+    void Execute(Enemy enemy);
+}
+
+public class ChaseStrategy : IEnemyStrategy //estrategia de persecucion. hace que el enemigo se mueva hacia el jugador.
+
+{
+    public void Execute(Enemy enemy)
+    {
+        enemy.Move();
+    }
+}
+
+public class AttackStrategy : IEnemyStrategy // de ataque
+{
+    public void Execute(Enemy enemy)
+    {
+        enemy.AttackBehaviour();
+    }
+}
+#endregion
 public class Enemy : MonoBehaviour
 {
-    public enum EnemyState
+
+    [Header("Flyweight - Shared Enemy Data")] //flyweight, los datos compartidos por los enemigos se almacenan en un ScriptableObject para evitar duplicar info
+                                              
+    [SerializeField] private EnemyData enemyData;
+
+    [Header("Look Up Table")]
+    [SerializeField] private int enemyLevel = 0;
+
+    private int[] damageTable = //Look Up Table, almacena el daño segun el nivel del enemigo.
     {
-        Chase,
-        Attack
-    }
-
-    [Header("Movimiento")]
-    [SerializeField] float moveSpeed = 3f;
-    [SerializeField] float rotationSpeed = 10f;
-
-    [Header("Ataque")]
-    [SerializeField] float attackRange = 1.5f;
-    [SerializeField] float attackCooldown = 1f;
-    [SerializeField] int damage = 10;
-
-    [Header("Steering")]
-    [SerializeField] float separationRadius = 1.5f;
-    [SerializeField] float separationStrength = 3f;
-    [SerializeField] float personalSpace = 0.8f;
+        10,
+        15,
+        20,
+        30,
+        50
+    };
 
     private Transform player;
-    private EnemyState currentState;
     private float attackTimer;
+    private int damage;
+
+    private IEnemyStrategy currentStrategy;
+
+    private ChaseStrategy chaseStrategy;
+    private AttackStrategy attackStrategy;
 
     void Start()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player"); //busca al player
 
         if (playerObj != null)
             player = playerObj.transform;
 
-        currentState = EnemyState.Chase;
+        chaseStrategy = new ChaseStrategy(); //inicia estrategias enemigos
+        attackStrategy = new AttackStrategy();
+
+        damage = damageTable[
+            Mathf.Clamp(enemyLevel, 0, damageTable.Length - 1) //daño segun el lvl de la tabla
+        ];
+
+        currentStrategy = chaseStrategy;
     }
 
     void Update()
@@ -41,23 +76,24 @@ public class Enemy : MonoBehaviour
         if (player == null)
             return;
 
-        UpdateState();
-        Move();
-        AttackBehaviour();
+        UpdateStrategy(); //que comportamiento usar?
+
+        currentStrategy?.Execute(this);
     }
 
-    void UpdateState()
+    void UpdateStrategy()
     {
-        float distance = Vector3.Distance(
+        float distance = Vector3.Distance( //si el jugador esta cerca ataca si esta lejos lo persigue
             transform.position,
             player.position);
 
-        currentState = distance <= attackRange
-            ? EnemyState.Attack
-            : EnemyState.Chase;
+        if (distance <= enemyData.attackRange)
+            currentStrategy = attackStrategy;
+        else
+            currentStrategy = chaseStrategy;
     }
 
-    void Move()
+    public void Move()
     {
         Vector3 seekDirection =
             (player.position - transform.position).normalized;
@@ -72,7 +108,7 @@ public class Enemy : MonoBehaviour
 
         transform.position +=
             finalDirection *
-            moveSpeed *
+            enemyData.moveSpeed *
             Time.deltaTime;
 
         if (finalDirection.sqrMagnitude > 0.01f)
@@ -83,22 +119,19 @@ public class Enemy : MonoBehaviour
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRotation,
-                rotationSpeed * Time.deltaTime);
+                enemyData.rotationSpeed * Time.deltaTime);
         }
     }
 
-    void AttackBehaviour()
+    public void AttackBehaviour()
     {
-        if (currentState != EnemyState.Attack)
-            return;
-
         attackTimer += Time.deltaTime;
 
-        if (attackTimer >= attackCooldown)
+        if (attackTimer >= enemyData.attackCooldown)
         {
             attackTimer = 0f;
 
-            Debug.Log("Enemy attacks");
+            Debug.Log("Enemy attacks for " + damage);
 
             // player.GetComponent<PlayerHealth>()
             //      .TakeDamage(damage);
@@ -109,7 +142,7 @@ public class Enemy : MonoBehaviour
     {
         Collider[] nearbyEnemies = Physics.OverlapSphere(
             transform.position,
-            separationRadius);
+            enemyData.separationRadius);
 
         Vector3 separation = Vector3.zero;
 
@@ -132,37 +165,43 @@ public class Enemy : MonoBehaviour
             if (distance <= 0.001f)
                 continue;
 
-            if (distance < personalSpace)
+            if (distance < enemyData.personalSpace)
             {
                 separation +=
                     diff.normalized *
-                    (personalSpace - distance);
+                    (enemyData.personalSpace - distance);
             }
         }
 
-        return separation * separationStrength;
+        return separation * enemyData.separationStrength;
     }
 
     void OnDrawGizmosSelected()
     {
+        if (enemyData == null)
+            return;
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(
             transform.position,
-            separationRadius);
+            enemyData.separationRadius);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(
             transform.position,
-            personalSpace);
+            enemyData.personalSpace);
     }
 
     private void OnDestroy()
     {
-        FindObjectOfType<WaveSpawner>()
-            .waves[
-                FindObjectOfType<WaveSpawner>().currentWaveIndex
-            ]
-            .enemiesLeft--;
+        WaveSpawner waveSpawner = FindObjectOfType<WaveSpawner>();
+
+        if (waveSpawner != null &&
+            waveSpawner.currentWaveIndex < waveSpawner.waves.Length)
+        {
+            waveSpawner.waves[
+                waveSpawner.currentWaveIndex
+            ].enemiesLeft--;
+        }
     }
 }
-
