@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         ApplyRotation();
         ApplyGravity();
         ApplyMovement();

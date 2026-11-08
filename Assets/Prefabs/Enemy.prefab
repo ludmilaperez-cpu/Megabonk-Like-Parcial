@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2233365543799688445}
   - component: {fileID: -1352617246517922784}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,11 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f18622de055e15459b75975eec290fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  moveSpeed: 3
-  rotationSpeed: 10
-  attackRange: 1.5
-  attackCooldown: 1
-  damage: 10
-  separationRadius: 1.5
-  separationStrength: 3
-  personalSpace: 0.8
+  enemyData: {fileID: 11400000, guid: a1da4fa46a1c8b240ae51fc402a108cc, type: 2}
+  enemyLevel: 0

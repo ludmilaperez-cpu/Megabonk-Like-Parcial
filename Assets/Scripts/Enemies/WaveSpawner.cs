@@ -115,7 +115,7 @@ public class WaveSpawner : MonoBehaviour
 [System.Serializable]
 public class Wave
 {
-    public Enemy enemyPrefab;
+    public GameObject enemyPrefab;
 
     public int enemyCount = 10;
 
