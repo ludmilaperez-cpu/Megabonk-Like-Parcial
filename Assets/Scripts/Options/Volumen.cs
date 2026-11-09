@@ -7,7 +7,7 @@ public class Volumen : MonoBehaviour
     public float sliderValue;
     public Image imageMute;
 
-    void Start()
+    void OnEnable()
     {
         sliderValue = OpcionesGlobales.VolumenActual;
         slider.SetValueWithoutNotify(sliderValue);

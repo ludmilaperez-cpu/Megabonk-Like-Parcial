@@ -2,14 +2,29 @@ using UnityEngine;
 
 public class BetwenScenes : MonoBehaviour
 {
+    public static BetwenScenes Instance { get; private set; }
+
+    [SerializeField] private GameObject panelOpciones;
+
     private void Awake()
     {
-        var noDestruirEntreEscenas = FindObjectsByType<BetwenScenes>(FindObjectsSortMode.None);
-        if (noDestruirEntreEscenas.Length > 1)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
+        Instance = this;
         DontDestroyOnLoad(gameObject);
+        panelOpciones.SetActive(false);
+    }
+
+    public void MostrarOpciones()
+    {
+        panelOpciones.SetActive(true);
+    }
+
+    public void OcultarOpciones()
+    {
+        panelOpciones.SetActive(false);
     }
 }

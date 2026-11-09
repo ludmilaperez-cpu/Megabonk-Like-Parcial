@@ -5,9 +5,13 @@ public static class OpcionesGlobales
 {
     const string VOLUMEN_KEY = "volumen";
     const string BRILLO_KEY = "brillo";
+    const string PANTALLA_COMPLETA_KEY = "pantallaCompleta";
+    const string ANCHO_KEY = "resolucionAncho";
+    const string ALTO_KEY = "resolucionAlto";
     public const float VOLUMEN_INICIAL = 1f;
     public const float BRILLO_INICIAL = 0.5f;
     public const float BRILLO_MAXIMO = 0.9f;
+    public const bool PANTALLA_COMPLETA_INICIAL = true;
 
     static Image overlay;
 
@@ -31,12 +35,46 @@ public static class OpcionesGlobales
         }
     }
 
+    public static bool PantallaCompleta
+    {
+        get { return PlayerPrefs.GetInt(PANTALLA_COMPLETA_KEY, PANTALLA_COMPLETA_INICIAL ? 1 : 0) == 1; }
+        set
+        {
+            PlayerPrefs.SetInt(PANTALLA_COMPLETA_KEY, value ? 1 : 0);
+            ApplyPantalla();
+        }
+    }
+
+    public static Vector2Int ResolucionActual
+    {
+        get
+        {
+            Resolution nativa = Screen.currentResolution;
+            return new Vector2Int(PlayerPrefs.GetInt(ANCHO_KEY, nativa.width), PlayerPrefs.GetInt(ALTO_KEY, nativa.height));
+        }
+    }
+
+    public static void SetResolucion(int ancho, int alto)
+    {
+        PlayerPrefs.SetInt(ANCHO_KEY, ancho);
+        PlayerPrefs.SetInt(ALTO_KEY, alto);
+        ApplyPantalla();
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Init()
     {
         AudioListener.volume = VolumenActual;
         CreateOverlay();
         ApplyBrillo(BrilloActual);
+        ApplyPantalla();
+    }
+
+    static void ApplyPantalla()
+    {
+        Vector2Int resolucion = ResolucionActual;
+        FullScreenMode modo = PantallaCompleta ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        Screen.SetResolution(resolucion.x, resolucion.y, modo);
     }
 
     static void CreateOverlay()

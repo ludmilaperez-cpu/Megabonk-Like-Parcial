@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuSystem : MonoBehaviour
 {
     [SerializeField] private GameObject panelSeguro;
+    [SerializeField] private Pausa pausa;
 
     public void Play()
     {
@@ -21,16 +22,25 @@ public class MenuSystem : MonoBehaviour
     {
        SceneManager.LoadScene("Credits");
     }
-    public void Options() 
+    public void Options()
     {
-        SceneManager.LoadScene("Options");
+        if (BetwenScenes.Instance != null) BetwenScenes.Instance.MostrarOpciones();
+    }
+    public void SalirOptions()
+    {
+        if (BetwenScenes.Instance != null) BetwenScenes.Instance.OcultarOpciones();
     }
     public void Store() 
     {
         SceneManager.LoadScene("Store");
     }
+    public void Reanudar()
+    {
+        pausa.Reanudar();
+    }
     public void BackToMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
     }
     public void Si()

@@ -6,14 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Options.unity
-    guid: c4f5da933cfbf534ca2d8cae0ab1a412
-  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: a96fea7c3ea49c84ba99069ad18266ac
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Movement (deberitas).unity
+    guid: 101752146c45c4649999235a3573cb41
   - enabled: 1
     path: Assets/Scenes/Store.unity
     guid: 85b89f225f73bec4ebbd88798158bce5

@@ -7,9 +7,9 @@ public class Brillo : MonoBehaviour
     public float sliderValue;
     public Image panelBrillo;
 
-    void Start()
+    void OnEnable()
     {
-        panelBrillo.enabled = false;
+        if (panelBrillo != null) panelBrillo.gameObject.SetActive(false);
         slider.minValue = 0f;
         slider.maxValue = OpcionesGlobales.BRILLO_MAXIMO;
         sliderValue = OpcionesGlobales.BrilloActual;

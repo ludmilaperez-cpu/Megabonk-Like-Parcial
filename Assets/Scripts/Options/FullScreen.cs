@@ -9,15 +9,15 @@ public class FullScreen : MonoBehaviour
     public TMP_Dropdown resolucionesDD;
     List<Resolution> resolutions = new List<Resolution>();
 
-    void Start()
+    void OnEnable()
     {
-        toggle.SetIsOnWithoutNotify(Screen.fullScreen);
+        toggle.SetIsOnWithoutNotify(OpcionesGlobales.PantallaCompleta);
         CheckResolutions();
     }
 
     public void ChangeToggle(bool value)
     {
-        Screen.fullScreen = value;
+        OpcionesGlobales.PantallaCompleta = value;
     }
 
     public void CheckResolutions()
@@ -25,13 +25,14 @@ public class FullScreen : MonoBehaviour
         resolutions.Clear();
         resolucionesDD.ClearOptions();
         List<string> opciones = new List<string>();
+        Vector2Int actual = OpcionesGlobales.ResolucionActual;
         int resolucionActual = 0;
         foreach (Resolution resolucion in Screen.resolutions)
         {
             if (resolutions.Exists(r => r.width == resolucion.width && r.height == resolucion.height)) continue;
             resolutions.Add(resolucion);
             opciones.Add(resolucion.width + " x " + resolucion.height);
-            if (resolucion.width == Screen.width && resolucion.height == Screen.height)
+            if (resolucion.width == actual.x && resolucion.height == actual.y)
             {
                 resolucionActual = resolutions.Count - 1;
             }
@@ -44,6 +45,6 @@ public class FullScreen : MonoBehaviour
     public void CambiarResolucion(int indiceResolucion)
     {
         Resolution resolucion = resolutions[indiceResolucion];
-        Screen.SetResolution(resolucion.width, resolucion.height, Screen.fullScreen);
+        OpcionesGlobales.SetResolucion(resolucion.width, resolucion.height);
     }
 }
