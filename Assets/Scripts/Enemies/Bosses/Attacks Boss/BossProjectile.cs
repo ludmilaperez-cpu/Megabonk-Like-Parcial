@@ -4,14 +4,25 @@ using System.Collections;
 public class BossProjectile : MonoBehaviour
 {
     [Header("Impacto")]
-    [SerializeField] private float fallTime = 0.5f;
+    [SerializeField] private float fallTime = 0.05f;
     [SerializeField] private float explosionRadius = 3f;
     [SerializeField] private int damage = 25;
-
     [Header("Referencias")]
     [SerializeField] private GameObject warningPrefab;
 
+    private Renderer[] renderers;
     private Vector3 targetPosition;
+
+    private void Awake()
+    {
+        renderers = GetComponentsInChildren<Renderer>();
+
+        //oculta el proyectil al instanciarse
+        foreach (Renderer r in renderers)
+        {
+            r.enabled = false;
+        }
+    }
 
     public void SetTarget(Vector3 target)
     {
@@ -22,26 +33,26 @@ public class BossProjectile : MonoBehaviour
 
     private IEnumerator FallAttack()
     {
-        //marca roja de ataq
+        //marca roja en el suelo
         GameObject warning = Instantiate(
-            warningPrefab,
-            targetPosition + Vector3.up * 0.05f,
-            Quaternion.identity);
+            warningPrefab,targetPosition + Vector3.up * 0.05f, Quaternion.Euler(90f, 0f, 0f));
 
-        yield return new WaitForSeconds(fallTime);
+        yield return new WaitForSeconds(0.6f);
 
         Destroy(warning);
 
-        //proyectil cae desde el cielo
-        transform.position =
-            targetPosition + Vector3.up * 10f;
+        //aparece en el cielo
+        transform.position = targetPosition + Vector3.up * 10f;
+
+        //ahora se vuelve visible
+        foreach (Renderer r in renderers)
+        {
+            r.enabled = true;
+        }
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.2f)
         {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                20f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,targetPosition,40f * Time.deltaTime);
 
             yield return null;
         }
@@ -61,6 +72,8 @@ public class BossProjectile : MonoBehaviour
             if (hit.CompareTag("Player"))
             {
                 Debug.Log("Boss hit player");
+
+                // hit.GetComponent<PlayerHealth>()?.TakeDamage(damage);
             }
         }
 
@@ -71,8 +84,6 @@ public class BossProjectile : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(
-            transform.position,
-            explosionRadius);
+        Gizmos.DrawWireSphere(transform.position,explosionRadius);
     }
 }

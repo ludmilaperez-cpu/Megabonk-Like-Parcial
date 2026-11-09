@@ -8,12 +8,15 @@ public class Boss : MonoBehaviour
 
     [Header("Ataque")]
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform firePoint;
     [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private int projectileCount = 5;
+
+    [Header("Patrones de Ataque")]
+    [SerializeField] private BossAttack[] attacks;
 
     private Transform player;
     private float attackTimer;
+
+    public Transform Player => player;
 
     private void Start()
     {
@@ -36,7 +39,8 @@ public class Boss : MonoBehaviour
         if (attackTimer >= attackCooldown)
         {
             attackTimer = 0f;
-            ShootVolley();
+
+            ExecuteRandomAttack();
         }
     }
 
@@ -65,20 +69,52 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void ShootVolley()
+    private void ExecuteRandomAttack()
     {
-        for (int i = 0; i < projectileCount; i++)
+        if (attacks == null || attacks.Length == 0)
         {
-            GameObject projectile =
-                Instantiate(
-                    projectilePrefab,
-                    firePoint.position,
-                    Quaternion.identity);
+            Debug.LogWarning("Boss sin ataques asignados.");
+            return;
+        }
 
-            BossProjectile proj =
-                projectile.GetComponent<BossProjectile>();
+        int randomAttack =
+            Random.Range(0, attacks.Length);
 
-            proj.SetTarget(player.position);
+        if (attacks[randomAttack] == null)
+        {
+            Debug.LogError(
+                "Ataque " + randomAttack + " no asignado en el Inspector.");
+            return;
+        }
+
+        attacks[randomAttack].Execute(this);
+    }
+
+    public void SpawnProjectile(Vector3 targetPosition)
+    {
+        GameObject projectile =
+            Instantiate(
+                projectilePrefab,
+                Vector3.zero,
+                Quaternion.identity);
+
+        BossProjectile proj =
+            projectile.GetComponent<BossProjectile>();
+
+        if (proj != null)
+        {
+            proj.SetTarget(targetPosition);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        BossSpawner spawner =
+            FindObjectOfType<BossSpawner>();
+
+        if (spawner != null)
+        {
+            spawner.BossDied();
         }
     }
 }
