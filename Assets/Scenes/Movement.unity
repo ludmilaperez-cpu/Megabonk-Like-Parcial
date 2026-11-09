@@ -805,9 +805,14 @@ MonoBehaviour:
   mainCamera: {fileID: 675203353}
   spawnRadius: 20
   waves:
-  - enemyPrefab: {fileID: 8090955062757115324, guid: 740966186e3396a4f9688931042cbb96, type: 3}
-    enemyCount: 1
-    timeToNextEnemy: 0
+  - enemyPrefab: {fileID: 8043916179618651335, guid: 9942cba8534a86443b74662aaebffa54, type: 3}
+    enemyCount: 5
+    timeToNextEnemy: 2
+    timeToNextWave: 5
+    enemiesLeft: 0
+  - enemyPrefab: {fileID: 8043916179618651335, guid: 9942cba8534a86443b74662aaebffa54, type: 3}
+    enemyCount: 5
+    timeToNextEnemy: 2
     timeToNextWave: 5
     enemiesLeft: 0
   currentWaveIndex: 0
@@ -1837,6 +1842,22 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
       propertyPath: 'm_Materials.Array.data[4]'
       value: 
       objectReference: {fileID: 2100000, guid: cb895888cf4e11f4c8e58a266992f7db, type: 2}
@@ -1866,6 +1887,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63e31abdf75d7b347947e4bd45ea4fd4, type: 3}
   m_PrefabInstance: {fileID: 1755778776}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1961804564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961804566}
+  - component: {fileID: 1961804565}
+  m_Layer: 0
+  m_Name: BossSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1961804565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961804564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90050ed6c6eb70f48a807d854f157cd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossSpawner
+  bosses:
+  - {fileID: 8090955062757115324, guid: 740966186e3396a4f9688931042cbb96, type: 3}
+  player: {fileID: 990893866}
+  spawnRadius: 20
+  bossInterval: 5
+--- !u!4 &1961804566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961804564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.14526, y: -0, z: 0.59015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1881,3 +1951,4 @@ SceneRoots:
   - {fileID: 1117538426}
   - {fileID: 693411202}
   - {fileID: 1690303652}
+  - {fileID: 1961804566}
