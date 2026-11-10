@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour
 {
    public static GameManager instance;
 
-    int currentLevel = 0;
+    int currentLevel = 1;
+    public void SetCurrentLevel(int level)
+    {
+        currentLevel = level;
+    }
     GameState currentState;
     public event Action<GameState> OnStateChanged; //avisa de cambio de estado
     private void Awake()
@@ -16,14 +20,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current != null &&
-            Keyboard.current.aKey.wasPressedThisFrame)
-        {
-            Debug.Log("A presionada");
+       // if (Keyboard.current != null &&
+           // Keyboard.current.aKey.wasPressedThisFrame)
+       // {
+          //  Debug.Log("A presionada");
 
-            CardManager.Instance.RandomizeNewCards(); //genera 3 cartas y muestra la seleccion
-            CardManager.Instance.ShowCardSelection();
-        }
+          //  CardManager.Instance.RandomizeNewCards(); //genera 3 cartas y muestra la seleccion
+          //  CardManager.Instance.ShowCardSelection();
+       // }
     }
     public int GetCurrentLevel()  //devuelve lvl para q otos puedan acceder
     { 
@@ -54,6 +58,8 @@ public class GameManager : MonoBehaviour
     {
         Playing,
 
-        CardSelection
+        CardSelection,
+
+        GameOver
     }
 }

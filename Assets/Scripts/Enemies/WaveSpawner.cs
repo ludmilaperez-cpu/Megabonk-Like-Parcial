@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class WaveSpawner : MonoBehaviour
-{
+{ //crear enemigos cerca del player y fuera de la camara
     [SerializeField] private Transform player;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float spawnRadius = 20f;
@@ -13,7 +13,7 @@ public class WaveSpawner : MonoBehaviour
     private float countdown;
     private bool readyToCountDown;
 
-    private void Start()
+    private void Start() //inicia oleada con enemigos
     {
         readyToCountDown = true;
 
@@ -25,11 +25,11 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Update() //si ya no hay oleadas termina el sist
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("You survived every wave!");
+            Debug.Log("You survived every wave");
             return;
         }
 
@@ -38,7 +38,7 @@ public class WaveSpawner : MonoBehaviour
             countdown -= Time.deltaTime;
         }
 
-        if (countdown <= 0)
+        if (countdown <= 0) //nueva oleada
         {
             readyToCountDown = false;
 
@@ -47,7 +47,7 @@ public class WaveSpawner : MonoBehaviour
             countdown = waves[currentWaveIndex].timeToNextWave;
         }
 
-        if (waves[currentWaveIndex].enemiesLeft <= 0)
+        if (waves[currentWaveIndex].enemiesLeft <= 0) //comprueba si los enemigos fueron eliminados
         {
             currentWaveIndex++;
 
@@ -58,41 +58,29 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnWave()
+    private IEnumerator SpawnWave() //oleada actual y genera enemigos de oleada, busca punto fuera de la camara 
     {
         Wave wave = waves[currentWaveIndex];
 
-        for (int i = 0; i < wave.enemyCount; i++)
+        for (int i = 0; i < wave.enemyCount; i++) 
         {
             Vector3 spawnPos = GetSpawnPositionOutsideView();
 
-            Instantiate(
-                wave.enemyPrefab,
-                spawnPos,
-                Quaternion.identity
-            );
+            Instantiate(wave.enemyPrefab,spawnPos,Quaternion.identity);
 
-            yield return new WaitForSeconds(
-                wave.timeToNextEnemy
-            );
+            yield return new WaitForSeconds(wave.timeToNextEnemy);
         }
     }
 
-    private Vector3 GetSpawnPositionOutsideView()
+    private Vector3 GetSpawnPositionOutsideView() //sigue generando puntos aleatorios hasta encontrar uno q no este en pantalla
     {
         Vector3 spawnPosition;
 
         do
         {
-            Vector2 randomCircle =
-                Random.insideUnitCircle.normalized *
-                spawnRadius;
+            Vector2 randomCircle =Random.insideUnitCircle.normalized *spawnRadius;
 
-            spawnPosition = player.position +
-                new Vector3(
-                    randomCircle.x,
-                    0,
-                    randomCircle.y);
+            spawnPosition = player.position + new Vector3(randomCircle.x,0,randomCircle.y);
         }
         while (IsVisible(spawnPosition));
 
@@ -101,8 +89,7 @@ public class WaveSpawner : MonoBehaviour
 
     private bool IsVisible(Vector3 worldPosition)
     {
-        Vector3 viewportPos =
-            mainCamera.WorldToViewportPoint(worldPosition);
+        Vector3 viewportPos = mainCamera.WorldToViewportPoint(worldPosition); //comprueba si esta dentro de la pantallas
 
         return viewportPos.z > 0 &&
                viewportPos.x > 0 &&

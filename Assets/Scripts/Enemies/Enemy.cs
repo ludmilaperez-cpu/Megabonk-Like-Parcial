@@ -29,12 +29,14 @@ public class AttackStrategy : IEnemyStrategy // de ataque
 public class Enemy : MonoBehaviour
 {
 
-    [Header("Flyweight - Shared Enemy Data")] //flyweight, los datos compartidos por los enemigos se almacenan en un ScriptableObject para evitar duplicar info
-                                              
+    [Header("Flyweight - Shared Enemy Data")] //flyweight, los datos compartidos por los enemigos se almacenan en un ScriptableObject para evitar duplicar info                                       
     [SerializeField] private EnemyData enemyData;
-
     [Header("Look Up Table")]
     [SerializeField] private int enemyLevel = 0;
+    [Header("Experience")]
+    [SerializeField] private GameObject experienceOrbPrefab;
+
+    [SerializeField] private int experienceReward = 100; 
 
     private int[] damageTable = //Look Up Table, almacena el daño segun el nivel del enemigo.
     {
