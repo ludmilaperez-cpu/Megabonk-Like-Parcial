@@ -15,7 +15,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _rotationSpeed = 500f;
     private Camera _mainCamera;
 
-    [SerializeField] float _speed;
+    [SerializeField] float _speed; 
+
+    public float Speed { get; set; }
+
+    public void ResetStats() => Speed = _speed;
 
     private float _gravity = -9.81f;
     [SerializeField] float _gravityMultiplier;
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         _charController = GetComponent<CharacterController>();
         _mainCamera = Camera.main;
+        ResetStats();
     }
 
     private void Update()
@@ -65,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
-        _charController.Move(_direction * _speed * Time.deltaTime );
+        _charController.Move(_direction * Speed * Time.deltaTime);
     }
 
     public void Move(InputAction.CallbackContext context)
