@@ -37,7 +37,7 @@ public class AdManager : MonoBehaviour
             rewardedAds.LoadRewardedAd();
         }
 
-        //suscrir a los cambios de estado del GameManager 
+        //suscrbir a los cambios de estado del GameManager 
         if (GameManager.instance != null)
         {
             GameManager.instance.OnStateChanged += HandleGameStateChanged;

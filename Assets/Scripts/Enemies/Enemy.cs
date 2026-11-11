@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy attacks for " + damage);
 
             // player.GetComponent<PlayerHealth>()
-            //      .TakeDamage(damage);
+            //.TakeDamage(damage);
         }
     }
 
@@ -201,9 +201,7 @@ public class Enemy : MonoBehaviour
         if (waveSpawner != null &&
             waveSpawner.currentWaveIndex < waveSpawner.waves.Length)
         {
-            waveSpawner.waves[
-                waveSpawner.currentWaveIndex
-            ].enemiesLeft--;
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         }
     }
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEditor;
 
 
 public class CardManager : MonoBehaviour
@@ -21,7 +23,7 @@ public class CardManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start() 
+    void Start()  //se suscribe al evento de cambio de estado del GameManager
     {
         if (GameManager.instance != null)
         {
@@ -31,9 +33,10 @@ public class CardManager : MonoBehaviour
         {
             Debug.LogError("GameManager.instance es nulo en Start de CardManager.");
         }
+        HideCardSelection(); //panel de seleccion oculto al iniciar la escena
     }
 
-    void OnDisable() 
+    void OnDisable()  //desuscribe del evento al desactivarse o destruirse para evitar errores
     {
         if (GameManager.instance != null)
             GameManager.instance.OnStateChanged -= HandleGameStateChanged;
@@ -46,13 +49,13 @@ public class CardManager : MonoBehaviour
             RandomizeNewCards();
             ShowCardSelection();
         }
-        else if (state == GameManager.GameState.Playing)
+        else if (state == GameManager.GameState.Playing) //si el juego vuelve a la normalidad oculta el menu
         {
             HideCardSelection();
         }
     }
 
-    public void RandomizeNewCards()
+    public void RandomizeNewCards() //selecciona 3 cartas aleatorias validas y las instancia en pantalla
     {
         if (cardOne != null) Destroy(cardOne);
         if (cardTwo != null) Destroy(cardTwo);
@@ -61,9 +64,9 @@ public class CardManager : MonoBehaviour
         List<CardSO> randomizedCards = new List<CardSO>();
         List<CardSO> availableCards = new List<CardSO>(deck);
 
-        availableCards.RemoveAll(card =>
-            (card.isUnique && alreadySelectedCards.Contains(card)) ||
-            (card.unlockLevel > GameManager.instance.GetCurrentLevel()));
+        availableCards.RemoveAll(card =>(card.isUnique && alreadySelectedCards.Contains(card)) ||
+        (card.unlockLevel > GameManager.instance.GetCurrentLevel())); //filtra las cartas que NO se pueden elegir: Si la carta es unica y ya fue elegida antes o si el lvl 
+                                                                      //si el nivel requerido de desbloqueo de la carta es mayor al nivel actual del jugador.
 
         if (availableCards.Count < 3)
         {
@@ -71,7 +74,7 @@ public class CardManager : MonoBehaviour
             return;
         }
 
-        while (randomizedCards.Count < 3)
+        while (randomizedCards.Count < 3) //bucle para elegir 3 cartas aleatorias distintas de las disponibles
         {
             CardSO randomCard = availableCards[Random.Range(0, availableCards.Count)];
             if (!randomizedCards.Contains(randomCard))
@@ -96,7 +99,7 @@ public class CardManager : MonoBehaviour
         return cardGo;
     }
 
-    public void SelectCard(CardSO selectedCard)
+    public void SelectCard(CardSO selectedCard) //se ejecuta cuando el jugador hace clic en una carta especifica
     {
         Debug.Log("Carta seleccionada: " + selectedCard.cardText);
         if (!alreadySelectedCards.Contains(selectedCard))
@@ -116,11 +119,11 @@ public class CardManager : MonoBehaviour
                 Debug.Log("Boost de speed");
                 break;
         }
-
+        //le avisa al GameManager que vuelva al estado de juego normal
         GameManager.instance.ChangeState(GameManager.GameState.Playing);
     }
 
-    public void ShowCardSelection()
+    public void ShowCardSelection() //muestra el panel visual de cartas en la interfaz
     {
         if (cardSelectionUI != null)
         {
@@ -132,7 +135,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void HideCardSelection()
+    public void HideCardSelection() //las oculta
     {
         if (cardSelectionUI != null)
         {

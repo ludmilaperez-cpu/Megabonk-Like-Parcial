@@ -4,34 +4,25 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
-   public static GameManager instance;
+    public static GameManager instance;
 
     int currentLevel = 1;
     public void SetCurrentLevel(int level)
     {
         currentLevel = level;
     }
+
     GameState currentState;
     public event Action<GameState> OnStateChanged; //avisa de cambio de estado
+
     private void Awake()
     {
         instance = this;
     }
 
-    private void Update()
+    public int GetCurrentLevel() //devuelve lvl para q otros puedan acceder
     {
-       // if (Keyboard.current != null &&
-           // Keyboard.current.aKey.wasPressedThisFrame)
-       // {
-          //  Debug.Log("A presionada");
-
-          //  CardManager.Instance.RandomizeNewCards(); //genera 3 cartas y muestra la seleccion
-          //  CardManager.Instance.ShowCardSelection();
-       // }
-    }
-    public int GetCurrentLevel()  //devuelve lvl para q otos puedan acceder
-    { 
-     return currentLevel;
+        return currentLevel;
     }
 
     public void ChangeState(GameState newState)
@@ -45,21 +36,37 @@ public class GameManager : MonoBehaviour
     {
         switch (currentState)
         {
-             case GameState.Playing:
-                CardManager.Instance.HideCardSelection(); //oculta las cartas durante el juego
+            case GameState.Playing:
+                Time.timeScale = 1f; //reanuda el tiempo del juego
+                if (CardManager.Instance != null)
+                    CardManager.Instance.HideCardSelection();
                 break;
+
             case GameState.CardSelection:
-                CardManager.Instance.ShowCardSelection(); //muestra las cartas durante la seleccion
+                Time.timeScale = 0f; //pausa el tiempo del juego (enemigos, movimiento, etc.)
+                if (CardManager.Instance != null)
+                    CardManager.Instance.ShowCardSelection();
                 break;
+
+            case GameState.GameOver:
+                Time.timeScale = 0f; //pausa el juego también al morir
+                break;
+        }
+    }
+    private void Update()
+    {
+        //SOLO PARA PRUEBAS: G para simular que el jugador murio
+        if (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame)
+        {
+            Debug.Log("Simulando Game Over con la tecla G");
+            ChangeState(GameState.GameOver);
         }
     }
 
     public enum GameState //estados posibles
     {
         Playing,
-
         CardSelection,
-
         GameOver
     }
 }
