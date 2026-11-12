@@ -6,22 +6,23 @@ public class ExperienceOrb : MonoBehaviour
 
     public void SetExperience(int value)
     {
-        experienceValue = value;
+        experienceValue = value; //cantidad de exp q dara la orb
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            return;
+        if (!other.CompareTag("Player")) return; //solo el player agarra exp
 
-        PlayerLevel playerLevel =
-            other.GetComponent<PlayerLevel>();
+
+        PlayerLevel playerLevel =other.GetComponent<PlayerLevel>(); //busca quien maneja los niveles
 
         if (playerLevel != null)
         {
-            playerLevel.AddExperience(experienceValue);
+            Debug.Log("Player ganó " +experienceValue +" EXP");
 
-            Destroy(gameObject);
+            playerLevel.AddExperience(experienceValue); //suma exp al jugador 
+
+            Destroy(gameObject); //orbe desaparece al ser recogida
         }
     }
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 
 #region Strategy
@@ -18,7 +18,7 @@ public class ChaseStrategy : IEnemyStrategy //estrategia de persecucion. hace qu
     }
 }
 
-public class AttackStrategy : IEnemyStrategy // de ataque
+public class AttackStrategy : IEnemyStrategy //de ataque
 {
     public void Execute(Enemy enemy)
     {
@@ -36,7 +36,10 @@ public class Enemy : MonoBehaviour
     [Header("Experience")]
     [SerializeField] private GameObject experienceOrbPrefab;
 
-    [SerializeField] private int experienceReward = 100; 
+    [SerializeField] private int experienceReward = 100;
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float experienceDropChance = 0.7f;
 
     private int[] damageTable = //Look Up Table, almacena el daño segun el nivel del enemigo.
     {
@@ -60,15 +63,13 @@ public class Enemy : MonoBehaviour
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player"); //busca al player
 
-        if (playerObj != null)
-            player = playerObj.transform;
+        if (playerObj != null) player = playerObj.transform;
 
         chaseStrategy = new ChaseStrategy(); //inicia estrategias enemigos
         attackStrategy = new AttackStrategy();
 
-        damage = damageTable[
-            Mathf.Clamp(enemyLevel, 0, damageTable.Length - 1) //daño segun el lvl de la tabla
-        ];
+        damage = damageTable[Mathf.Clamp(enemyLevel, 0, damageTable.Length - 1)]; //daño segun el lvl de la tabla
+
 
         currentStrategy = chaseStrategy;
     }
@@ -86,42 +87,30 @@ public class Enemy : MonoBehaviour
     void UpdateStrategy()
     {
         float distance = Vector3.Distance( //si el jugador esta cerca ataca si esta lejos lo persigue
-            transform.position,
-            player.position);
+            transform.position,player.position);
 
-        if (distance <= enemyData.attackRange)
-            currentStrategy = attackStrategy;
-        else
-            currentStrategy = chaseStrategy;
+        if (distance <= enemyData.attackRange) currentStrategy = attackStrategy;
+
+        else currentStrategy = chaseStrategy;
     }
 
     public void Move()
     {
-        Vector3 seekDirection =
-            (player.position - transform.position).normalized;
+        Vector3 seekDirection = (player.position - transform.position).normalized;
 
-        Vector3 separationDirection =
-            GetSeparationForce();
+        Vector3 separationDirection = GetSeparationForce();
 
-        Vector3 finalDirection =
-            (seekDirection + separationDirection).normalized;
+        Vector3 finalDirection = (seekDirection + separationDirection).normalized;
 
         finalDirection.y = 0f;
 
-        transform.position +=
-            finalDirection *
-            enemyData.moveSpeed *
-            Time.deltaTime;
+        transform.position += finalDirection * enemyData.moveSpeed * Time.deltaTime;
 
         if (finalDirection.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(finalDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(finalDirection);
 
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                enemyData.rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,enemyData.rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -142,23 +131,19 @@ public class Enemy : MonoBehaviour
 
     Vector3 GetSeparationForce()
     {
-        Collider[] nearbyEnemies = Physics.OverlapSphere(
-            transform.position,
-            enemyData.separationRadius);
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position,enemyData.separationRadius);
 
         Vector3 separation = Vector3.zero;
 
         foreach (Collider col in nearbyEnemies)
         {
-            if (col.gameObject == gameObject)
+            if (col.gameObject == gameObject) 
                 continue;
 
             if (!col.CompareTag("Enemy"))
                 continue;
 
-            Vector3 diff =
-                transform.position -
-                col.transform.position;
+            Vector3 diff = transform.position - col.transform.position;
 
             diff.y = 0f;
 
@@ -169,9 +154,7 @@ public class Enemy : MonoBehaviour
 
             if (distance < enemyData.personalSpace)
             {
-                separation +=
-                    diff.normalized *
-                    (enemyData.personalSpace - distance);
+                separation += diff.normalized * (enemyData.personalSpace - distance);
             }
         }
 
@@ -184,24 +167,45 @@ public class Enemy : MonoBehaviour
             return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(
-            transform.position,
-            enemyData.separationRadius);
+        Gizmos.DrawWireSphere(transform.position, enemyData.separationRadius);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(
-            transform.position,
-            enemyData.personalSpace);
+        Gizmos.DrawWireSphere(transform.position,enemyData.personalSpace);
     }
 
     private void OnDestroy()
     {
         WaveSpawner waveSpawner = FindObjectOfType<WaveSpawner>();
 
-        if (waveSpawner != null &&
-            waveSpawner.currentWaveIndex < waveSpawner.waves.Length)
+        if (waveSpawner != null && waveSpawner.currentWaveIndex < waveSpawner.waves.Length)
         {
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+        }
+    }
+
+    public void Die() //al morir...
+    {
+        DropExperience();
+
+        Destroy(gameObject);
+    }
+
+    private void DropExperience()
+    {
+        //70% de probabilidad de soltar experiencia, si el numero es mayor a la probabilidad no se genera un orb
+        if (Random.value > experienceDropChance)
+            return;
+
+        if (experienceOrbPrefab == null)
+            return;
+
+        GameObject orb = Instantiate(experienceOrbPrefab,transform.position,Quaternion.identity); //instancia la orbe en donde murio el enemigo
+
+        ExperienceOrb experienceOrb = orb.GetComponent<ExperienceOrb>();  //obtiene el componente ExperienceOrb para asignarle cuanta experiencia dara
+
+        if (experienceOrb != null)
+        {
+            experienceOrb.SetExperience(experienceReward);
         }
     }
 }

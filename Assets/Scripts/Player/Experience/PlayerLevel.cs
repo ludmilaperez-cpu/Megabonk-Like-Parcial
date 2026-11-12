@@ -22,13 +22,13 @@ public class PlayerLevel : MonoBehaviour
         }
     }
 
-    public void AddExperience(int amount)
+    public void AddExperience(int amount) 
     {
-        experience += amount;
+        experience += amount; //suma exp al total
 
         Debug.Log("EXP: " + experience);
 
-        CheckLevelUp();
+        CheckLevelUp(); //sube de lvl?
     }
 
     public void CheckLevelUp() //comprueba si la experiencia actual es suficiente para subir de nivel

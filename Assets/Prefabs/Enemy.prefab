@@ -127,3 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   enemyData: {fileID: 11400000, guid: a1da4fa46a1c8b240ae51fc402a108cc, type: 2}
   enemyLevel: 0
+  experienceOrbPrefab: {fileID: 8527858623051449106, guid: c1037643572d45a45a887f1327f3d884, type: 3}
+  experienceReward: 300
+  experienceDropChance: 0.7
