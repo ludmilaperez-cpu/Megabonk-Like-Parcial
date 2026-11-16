@@ -6,9 +6,18 @@ using System.Collections;
 
 public class SaveManager 
 {
-   public class GameData 
+   [System.Serializable]
+   public class UpgradeSave
+    {
+        public string id;   // ej: "UpgradeLife"
+        public int level;   // cuantas veces se compro
+    }
+
+   [System.Serializable]
+   public class GameData
     {
         public float coins;
+        public List<UpgradeSave> upgrades = new List<UpgradeSave>();
     }
 
     const string SAVE_FILE_NAME = "SaveData.json";
@@ -32,6 +41,12 @@ public class SaveManager
     {
         LastLoadedGameData.coins = totalCoins;
         Save();
+    }
+    /// <summary>Borra todos los datos guardados (monedas y upgrades) y deja el JSON en valores iniciales.</summary>
+    public static void ResetAll()
+    {
+        lastLoadedGameData = new GameData();
+        Save(lastLoadedGameData);
     }
     public static string GetSavePath()
     {

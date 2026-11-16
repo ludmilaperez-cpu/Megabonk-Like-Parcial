@@ -20,9 +20,15 @@ public class StoreManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log($"[StoreManager] Start: {pages.Count} paginas", this);
         for (int i = 0; i < pages.Count; i++)
         {
             int index = i;
+            if (pages[i].tabButton == null || pages[i].pageRoot == null)
+            {
+                Debug.LogError($"[StoreManager] Pagina {i} ('{pages[i].name}') tiene tabButton o pageRoot sin asignar", this);
+                continue;
+            }
             pages[i].tabButton.onClick.AddListener(() => ShowPage(index));
         }
         ShowPage(startPage);
@@ -30,11 +36,15 @@ public class StoreManager : MonoBehaviour
 
     public void ShowPage(int index)
     {
+        Debug.Log($"[StoreManager] ShowPage({index})", this);
         for (int i = 0; i < pages.Count; i++)
         {
-            bool selected = i == index;
-            pages[i].pageRoot.SetActive(selected);
-            pages[i].tabButton.image.color = selected ? selectedColor : unselectedColor;
+            if (pages[i].tabButton == null || pages[i].pageRoot == null) continue;
+            {
+                bool selected = i == index;
+                pages[i].pageRoot.SetActive(selected);
+                pages[i].tabButton.image.color = selected ? selectedColor : unselectedColor;
+            }
         }
     }
 }
