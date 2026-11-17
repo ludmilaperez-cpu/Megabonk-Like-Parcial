@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         CurrentHealth = MaxHealth;
     }
 
-    // Debug temporal: muestra los stats actuales arriba a la izquierda (borrar cuando haya UI de vida)
+    // Debug temporal muestra los stats actuales arriba a la izquierda (borrar cuando haya UI de vida)
     private void OnGUI()
     {
         GUI.Label(new Rect(10, 10, 400, 25), $"Vida: {CurrentHealth} / {MaxHealth}");

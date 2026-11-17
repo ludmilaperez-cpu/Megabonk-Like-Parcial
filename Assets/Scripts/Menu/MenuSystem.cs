@@ -10,6 +10,10 @@ public class MenuSystem : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void PlayTest()
+    {
+        SceneManager.LoadScene("Vicente Test");
+    }
     private void Start()
     {
         if (panelSeguro != null) panelSeguro.SetActive(false);
@@ -41,6 +45,8 @@ public class MenuSystem : MonoBehaviour
     public void BackToMenu()
     {
         Time.timeScale = 1f;
+        var collector = FindFirstObjectByType<PlayerCollector>();
+        if (collector != null) collector.BankCoins();
         SceneManager.LoadScene("Main Menu");
     }
     public void Si()
