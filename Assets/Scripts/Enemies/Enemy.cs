@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject experienceOrbPrefab;
 
     [SerializeField] private int experienceReward = 100;
+    [Header("Coins")]
+    [SerializeField] private GameObject coinPrefab;
     [SerializeField]
     [Range(0f, 1f)]
     private float experienceDropChance = 0.7f;
@@ -187,6 +189,8 @@ public class Enemy : MonoBehaviour
     {
         DropExperience();
 
+        DropCoin();
+
         Destroy(gameObject);
     }
 
@@ -207,5 +211,17 @@ public class Enemy : MonoBehaviour
         {
             experienceOrb.SetExperience(experienceReward);
         }
+    }
+
+    private void DropCoin()
+    {
+        
+        if (coinPrefab == null)
+            return;
+
+        //instancia la moneda donde murio el enemigo
+        Instantiate(coinPrefab,transform.position,Quaternion.identity);
+
+        Debug.Log("El enemigo solto una moneda");
     }
 }

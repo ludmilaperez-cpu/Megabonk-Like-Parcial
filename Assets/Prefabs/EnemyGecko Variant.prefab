@@ -109,4 +109,5 @@ MonoBehaviour:
   enemyLevel: 0
   experienceOrbPrefab: {fileID: 8527858623051449106, guid: c1037643572d45a45a887f1327f3d884, type: 3}
   experienceReward: 200
+  coinPrefab: {fileID: 6911636043852728658, guid: 40d4c13bbb326da4aa22a78037926e7f, type: 3}
   experienceDropChance: 0.7
