@@ -11,7 +11,7 @@ public class UICoinDisplay : MonoBehaviour
 
     private void Awake()
     {
-        displayTarget = GetComponent<TextMeshProUGUI>();
+        displayTarget = GetComponentInChildren<TextMeshProUGUI>(true);
     }
     private void OnEnable()
     {

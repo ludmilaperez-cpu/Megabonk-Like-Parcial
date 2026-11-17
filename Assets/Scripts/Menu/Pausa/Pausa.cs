@@ -5,7 +5,20 @@ public class Pausa : MonoBehaviour
 {
     [SerializeField] private GameObject panelPausa;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private ScreenManager screenManager; // opcional: si esta, maneja el panel de pausa
     bool enPausa;
+
+    private const string PauseScreen = "Pause";
+
+    private void SetPanel(bool visible)
+    {
+        if (screenManager != null)
+        {
+            if (visible) screenManager.Show(PauseScreen);
+            else screenManager.HideAll();
+        }
+        else if (panelPausa != null) panelPausa.SetActive(visible);
+    }
 
     private void Start()
     {
@@ -25,7 +38,7 @@ public class Pausa : MonoBehaviour
     {
         enPausa = true;
         Time.timeScale = 0f;
-        panelPausa.SetActive(true);
+        SetPanel(true);
         if (cameraController != null) cameraController.LockCamera();
     }
 
@@ -33,7 +46,7 @@ public class Pausa : MonoBehaviour
     {
         enPausa = false;
         Time.timeScale = 1f;
-        panelPausa.SetActive(false);
+        SetPanel(false);
         if (cameraController != null) cameraController.UnlockCamera();
     }
 }

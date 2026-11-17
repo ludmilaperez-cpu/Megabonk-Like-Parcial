@@ -19,7 +19,15 @@ public class PlayerController : MonoBehaviour
 
     public float Speed { get; set; }
 
-    public void ResetStats() => Speed = _speed;
+    [SerializeField] float _maxHealth = 100f; 
+    public float MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
+
+    public void ResetStats()
+    {
+        Speed = _speed;
+        MaxHealth = _maxHealth;
+    }
 
     private float _gravity = -9.81f;
     [SerializeField] float _gravityMultiplier;
@@ -34,6 +42,15 @@ public class PlayerController : MonoBehaviour
         _charController = GetComponent<CharacterController>();
         _mainCamera = Camera.main;
         ResetStats();
+        UpgradeManager.ApplyTo(this); 
+        CurrentHealth = MaxHealth;
+    }
+
+    // Debug temporal: muestra los stats actuales arriba a la izquierda (borrar cuando haya UI de vida)
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 400, 25), $"Vida: {CurrentHealth} / {MaxHealth}");
+        GUI.Label(new Rect(10, 30, 400, 25), $"Velocidad: {Speed}");
     }
 
     private void Update()
