@@ -1,65 +1,65 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ScreenManager;
+using ScreenStack = ScreenManager.ScreenManager;
 
 public class Pausa : MonoBehaviour
 {
+    [SerializeField] private SimpleUiScreen pauseScreen;
     [SerializeField] private GameObject panelPausa;
     [SerializeField] private CameraController cameraController;
-    [SerializeField] private ScreenManager screenManager; // opcional: si esta, maneja el panel de pausa
-    bool enPausa;
-    bool cardsPendientes; // true si al pausar estabamos eligiendo una carta
 
-    private const string PauseScreen = "Pause";
+    private bool enPausa;
+    private bool cardsPendientes;
 
-    private void SetPanel(bool visible)
-    {
-        if (screenManager != null)
-        {
-            if (visible) screenManager.Show(PauseScreen);
-            else screenManager.HideAll();
-        }
-        else if (panelPausa != null) panelPausa.SetActive(visible);
-    }
+    private bool UsaScreens => pauseScreen != null && ScreenStack.Instance != null;
 
     private void Start()
     {
+        if (!UsaScreens && panelPausa != null) panelPausa.SetActive(false);
         Reanudar();
     }
 
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            if (enPausa) Reanudar();
-            else Pausar();
-        }
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) return;
+
+        if (!enPausa) Pausar();
+        else if (UsaScreens && ScreenStack.Instance.Count > 2) ScreenStack.Instance.Pop();
+        else Reanudar();
     }
 
     public void Pausar()
     {
+        if (enPausa) return;
         enPausa = true;
         Time.timeScale = 0f;
 
-        // Si se estaban eligiendo cartas, se ocultan mientras dura la pausa y se recuerda para restaurarlas.
         var cards = CardManager.Instance;
         cardsPendientes = cards != null && cards.IsSelecting;
         if (cardsPendientes) cards.HideCardSelection();
 
-        SetPanel(true);
+        if (UsaScreens) ScreenStack.Instance.Push(pauseScreen);
+        else if (panelPausa != null) panelPausa.SetActive(true);
+
         if (cameraController != null) cameraController.LockCamera();
     }
 
     public void Reanudar()
     {
         enPausa = false;
-        SetPanel(false);
 
-        // Si habia cartas pendientes, se vuelven a mostrar y el tiempo sigue frenado hasta que elija una.
+        if (UsaScreens)
+        {
+            var screens = ScreenStack.Instance;
+            while (screens.Count > 1) screens.Pop();
+        }
+        else if (panelPausa != null) panelPausa.SetActive(false);
+
         if (cardsPendientes && CardManager.Instance != null)
         {
             CardManager.Instance.ShowCardSelection();
             Time.timeScale = 0f;
-            // El cursor tiene que seguir libre para elegir la carta.
             if (cameraController != null) cameraController.LockCamera();
         }
         else

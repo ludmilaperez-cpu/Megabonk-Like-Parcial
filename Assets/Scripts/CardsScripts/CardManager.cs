@@ -131,6 +131,8 @@ public class CardManager : MonoBehaviour
         GameManager.instance.ChangeState(GameManager.GameState.Playing);
     }
 
+    public bool IsSelecting => cardSelectionUI != null && cardSelectionUI.activeSelf;
+
     public void ShowCardSelection()
     {
         if (cardSelectionUI != null)

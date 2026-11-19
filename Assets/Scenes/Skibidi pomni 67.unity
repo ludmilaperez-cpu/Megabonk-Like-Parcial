@@ -6528,6 +6528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 65276231}
   - component: {fileID: 65276230}
+  - component: {fileID: 4300100031}
   m_Layer: 0
   m_Name: ScreenManager
   m_TagString: Untagged
@@ -6544,14 +6545,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 65276229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f20, type: 3}
+  m_Script: {fileID: 11500000, guid: 239597f604132854899b0d2fcaefbb43, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager
-  screens:
-  - id: Pause
-    root: {fileID: 1821015554}
-  startScreen: 
-  backOnEscape: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.ScreenManager
 --- !u!4 &65276231
 Transform:
   m_ObjectHideFlags: 0
@@ -33223,7 +33219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &317572043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34410,6 +34406,7 @@ GameObject:
   - component: {fileID: 326832203}
   - component: {fileID: 326832202}
   - component: {fileID: 326832201}
+  - component: {fileID: 4300100021}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -42990,6 +42987,7 @@ GameObject:
   - component: {fileID: 408675525}
   - component: {fileID: 408675524}
   - component: {fileID: 408675523}
+  - component: {fileID: 4300100043}
   m_Layer: 5
   m_Name: Return
   m_TagString: Untagged
@@ -43060,19 +43058,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 408675524}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1059226690}
-        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
-        m_MethodName: SalirOptions
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &408675524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95681,7 +95667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pausa
   panelPausa: {fileID: 1821015554}
   cameraController: {fileID: 675203357}
-  screenManager: {fileID: 65276230}
+  pauseScreen: {fileID: 4300100003}
 --- !u!4 &977689407
 Transform:
   m_ObjectHideFlags: 0
@@ -103858,42 +103844,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1059226692}
-  - component: {fileID: 1059226691}
-  - component: {fileID: 1059226690}
   m_Layer: 0
   m_Name: BetwenScenes
   m_TagString: Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1059226690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059226689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e33420eaa0df39409136fbda0fe6161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuSystem
-  panelSeguro: {fileID: 0}
-  pausa: {fileID: 977689406}
---- !u!114 &1059226691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059226689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399b7d79ea4ba1a4ea5d6e068570d124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BetwenScenes
-  panelOpciones: {fileID: 326832200}
+  m_IsActive: 1
 --- !u!4 &1059226692
 Transform:
   m_ObjectHideFlags: 0
@@ -166786,6 +166743,7 @@ GameObject:
   - component: {fileID: 1694211583}
   - component: {fileID: 1694211582}
   - component: {fileID: 1694211581}
+  - component: {fileID: 4300100041}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -166856,19 +166814,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1694211582}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1932274469}
-        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
-        m_MethodName: Options
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1694211582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179358,6 +179304,9 @@ GameObject:
   - component: {fileID: 1821015555}
   - component: {fileID: 1821015557}
   - component: {fileID: 1821015556}
+  - component: {fileID: 4300100001}
+  - component: {fileID: 4300100002}
+  - component: {fileID: 4300100003}
   m_Layer: 5
   m_Name: Panel Pausa
   m_TagString: Untagged
@@ -193117,8 +193066,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932274469}
-        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+      - m_Target: {fileID: 977689406}
+        m_TargetAssemblyTypeName: Pausa, Assembly-CSharp
         m_MethodName: Reanudar
         m_Mode: 1
         m_Arguments:
@@ -210624,6 +210573,152 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51b8cd9e64dc867439b7580243c9c6cf, type: 3}
+--- !u!223 &4300100001
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821015554}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &4300100002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821015554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &4300100003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821015554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcb4306bc305c04da91686a18c8afc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.SimpleUiScreen
+--- !u!114 &4300100021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326832200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcb4306bc305c04da91686a18c8afc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.SimpleUiScreen
+--- !u!1 &4300100100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4300100101}
+  - component: {fileID: 4300100102}
+  m_Layer: 0
+  m_Name: GameplayScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4300100101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300100100}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4300100102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300100100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512031d4113e54a4ea280de0de6ab509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.GameplayScreen
+--- !u!114 &4300100031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65276229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.ScreenInitializer
+  _initialScreen: {fileID: 4300100102}
+--- !u!114 &4300100041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694211579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285d150dd3dcd714b9c1a2ed12e7607e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.ButtonOpenOptions
+  _optionsCanva: {fileID: 4300100021}
+--- !u!114 &4300100043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408675521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6dea26bb994b2418b94fbc713931a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenManager.ButtonBack
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -210657,3 +210752,4 @@ SceneRoots:
   - {fileID: 1059226692}
   - {fileID: 977689407}
   - {fileID: 65276231}
+  - {fileID: 4300100101}

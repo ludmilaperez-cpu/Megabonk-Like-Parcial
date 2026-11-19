@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: a96fea7c3ea49c84ba99069ad18266ac
   - enabled: 1
-    path: Assets/Scenes/Movement.unity
-    guid: acdf7e5dfd2d6cc4d986ec0151f5ebad
+    path: Assets/Scenes/Skibidi pomni 67.unity
+    guid: 284ec094eaeaa26479a98f5ad28f3930
   - enabled: 1
     path: Assets/Scenes/Movement (deberitas).unity
     guid: 101752146c45c4649999235a3573cb41
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Vicente Test.unity
     guid: c4a7695344dc65b469e10dc3690e331f
+  - enabled: 1
+    path: Assets/Scenes/Movement.unity
+    guid: acdf7e5dfd2d6cc4d986ec0151f5ebad
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
