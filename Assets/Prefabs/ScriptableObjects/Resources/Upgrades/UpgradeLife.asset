@@ -15,6 +15,6 @@ MonoBehaviour:
   id: UpgradeLife
   displayName: + Vida
   stat: 0
-  valuePerLevel: 2
+  valuePerLevel: 10
   basePrice: 10
   priceMultiplier: 1.2
