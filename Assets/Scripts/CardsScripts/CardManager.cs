@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEngine.Rendering.DebugUI;
 using UnityEditor;
-
 
 public class CardManager : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform cardPositionTwo;
     [SerializeField] Transform cardPositionThree;
     [SerializeField] List<CardSO> deck; //cartas disponibles
+    [SerializeField] private List<GameObject> particlesObjects = new List<GameObject>();
 
     GameObject cardOne, cardTwo, cardThree;
     List<CardSO> alreadySelectedCards = new List<CardSO>();
@@ -23,7 +22,7 @@ public class CardManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()  //se suscribe al evento de cambio de estado del GameManager
+    void Start() //se suscribe al evento de cambio de estado del GameManager
     {
         if (GameManager.instance != null)
         {
@@ -33,10 +32,12 @@ public class CardManager : MonoBehaviour
         {
             Debug.LogError("GameManager.instance es nulo en Start de CardManager.");
         }
-        HideCardSelection(); //panel de seleccion oculto al iniciar la escena
+
+        HideCardSelection();
+        SetParticlesActive(false);
     }
 
-    void OnDisable()  //desuscribe del evento al desactivarse o destruirse para evitar errores
+    void OnDisable() //desuscribe del evento al desactivarse o destruirse para evitar errores
     {
         if (GameManager.instance != null)
             GameManager.instance.OnStateChanged -= HandleGameStateChanged;
@@ -64,9 +65,8 @@ public class CardManager : MonoBehaviour
         List<CardSO> randomizedCards = new List<CardSO>();
         List<CardSO> availableCards = new List<CardSO>(deck);
 
-        availableCards.RemoveAll(card =>(card.isUnique && alreadySelectedCards.Contains(card)) ||
-        (card.unlockLevel > GameManager.instance.GetCurrentLevel())); //filtra las cartas que NO se pueden elegir: Si la carta es unica y ya fue elegida antes o si el lvl 
-                                                                      //si el nivel requerido de desbloqueo de la carta es mayor al nivel actual del jugador.
+        availableCards.RemoveAll(card => (card.isUnique && alreadySelectedCards.Contains(card)) ||
+        (card.unlockLevel > GameManager.instance.GetCurrentLevel()));
 
         if (availableCards.Count < 3)
         {
@@ -74,7 +74,7 @@ public class CardManager : MonoBehaviour
             return;
         }
 
-        while (randomizedCards.Count < 3) //bucle para elegir 3 cartas aleatorias distintas de las disponibles
+        while (randomizedCards.Count < 3)
         {
             CardSO randomCard = availableCards[Random.Range(0, availableCards.Count)];
             if (!randomizedCards.Contains(randomCard))
@@ -90,7 +90,15 @@ public class CardManager : MonoBehaviour
 
     GameObject InstantiateCard(CardSO cardSO, Transform position)
     {
-        GameObject cardGo = Instantiate(cardPrefab, position.position, Quaternion.identity, position);
+        GameObject cardGo = Instantiate(cardPrefab, position, false);
+        RectTransform rect = cardGo.GetComponent<RectTransform>();
+        if (rect != null)
+        {
+            rect.anchoredPosition = Vector2.zero;
+            rect.localRotation = Quaternion.identity;
+            rect.localScale = Vector3.one;
+        }
+
         Card card = cardGo.GetComponent<Card>();
         if (card != null)
         {
@@ -119,27 +127,38 @@ public class CardManager : MonoBehaviour
                 Debug.Log("Boost de speed");
                 break;
         }
-        //le avisa al GameManager que vuelva al estado de juego normal
+
         GameManager.instance.ChangeState(GameManager.GameState.Playing);
     }
 
-    public void ShowCardSelection() //muestra el panel visual de cartas en la interfaz
+    public void ShowCardSelection()
     {
         if (cardSelectionUI != null)
         {
             cardSelectionUI.SetActive(true);
         }
-        else
-        {
-            Debug.LogError("CardSelectionUI no esta asignado en el Inspector de CardManager");
-        }
+
+        SetParticlesActive(true);
     }
 
-    public void HideCardSelection() //las oculta
+    public void HideCardSelection()
     {
         if (cardSelectionUI != null)
         {
             cardSelectionUI.SetActive(false);
+        }
+
+        SetParticlesActive(false);
+    }
+
+    private void SetParticlesActive(bool isActive)
+    {
+        foreach (GameObject particle in particlesObjects)
+        {
+            if (particle != null)
+            {
+                particle.SetActive(isActive);
+            }
         }
     }
 }

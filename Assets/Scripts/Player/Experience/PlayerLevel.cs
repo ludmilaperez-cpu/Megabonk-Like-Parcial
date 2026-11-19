@@ -18,7 +18,7 @@ public class PlayerLevel : MonoBehaviour
     {
         get
         {
-            return level * 1500;
+            return level * 100;
         }
     }
 

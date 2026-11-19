@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     [Header("Experience")]
     [SerializeField] private GameObject experienceOrbPrefab;
 
-    [SerializeField] private int experienceReward = 100;
+    [SerializeField] private int experienceReward = 1500;
     [Header("Coins")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField]

@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.CardSelection:
-                Time.timeScale = 0f; //pausa el tiempo del juego (enemigos, movimiento, etc.)
+                Time.timeScale = 0f;
+
                 if (CardManager.Instance != null)
                     CardManager.Instance.ShowCardSelection();
                 break;
