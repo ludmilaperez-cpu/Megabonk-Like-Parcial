@@ -207,7 +207,7 @@ public class Enemy : MonoBehaviour
 
         GameObject orb = Instantiate(experienceOrbPrefab,transform.position,Quaternion.identity); //instancia la orbe en donde murio el enemigo
 
-        ExperienceOrb experienceOrb = orb.GetComponent<ExperienceOrb>();  //obtiene el componente ExperienceOrb para asignarle cuanta experiencia dara
+        ExperienceOrb experienceOrb = orb.GetComponent<ExperienceOrb>(); //obtiene el componente ExperienceOrb para asignarle cuanta experiencia dara
 
         if (experienceOrb != null)
         {

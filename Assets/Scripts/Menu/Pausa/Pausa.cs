@@ -36,7 +36,7 @@ public class Pausa : MonoBehaviour
         Time.timeScale = 0f;
 
         var cards = CardManager.Instance;
-        cardsPendientes = cards != null && cards.IsSelecting;
+        //cardsPendientes = cards != null && cards.IsSelecting;
         if (cardsPendientes) cards.HideCardSelection();
 
         if (UsaScreens) ScreenStack.Instance.Push(pauseScreen);

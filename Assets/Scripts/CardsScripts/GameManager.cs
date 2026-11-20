@@ -1,28 +1,38 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject gameOverPanel;
+
     public static GameManager instance;
 
-    int currentLevel = 1;
+    private int currentLevel = 1;
     public void SetCurrentLevel(int level)
     {
         currentLevel = level;
     }
 
-    GameState currentState;
-    public event Action<GameState> OnStateChanged; //avisa de cambio de estado
+    private GameState currentState;
+    public event Action<GameState> OnStateChanged;
 
     private void Awake()
     {
         instance = this;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
     }
 
-    public int GetCurrentLevel() //devuelve lvl para q otros puedan acceder
+    public int GetCurrentLevel()
     {
         return currentLevel;
+    }
+    public GameState GetCurrentState()
+    {
+        return currentState;
     }
 
     public void ChangeState(GameState newState)
@@ -32,31 +42,35 @@ public class GameManager : MonoBehaviour
         HandleStateChanged();
     }
 
-    private void HandleStateChanged() //decide q hacer segun el estado
+    private void HandleStateChanged()
     {
         switch (currentState)
         {
             case GameState.Playing:
-                Time.timeScale = 1f; //reanuda el tiempo del juego
+                Time.timeScale = 1f;
+                if (gameOverPanel != null)
+                    gameOverPanel.SetActive(false);
                 if (CardManager.Instance != null)
                     CardManager.Instance.HideCardSelection();
                 break;
 
             case GameState.CardSelection:
                 Time.timeScale = 0f;
-
                 if (CardManager.Instance != null)
                     CardManager.Instance.ShowCardSelection();
                 break;
 
             case GameState.GameOver:
-                Time.timeScale = 0f; //pausa el juego también al morir
+                Time.timeScale = 0f;
+                if (gameOverPanel != null)
+                    gameOverPanel.SetActive(true);
                 break;
         }
     }
+
     private void Update()
     {
-        //SOLO PARA PRUEBAS: G para simular que el jugador murio
+        // SOLO PARA PRUEBAS: G para simular que el jugador murió
         if (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame)
         {
             Debug.Log("Simulando Game Over con la tecla G");
@@ -64,7 +78,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public enum GameState //estados posibles
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GoToMainMenu(string mainMenuSceneName = "MainMenu")
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
+    }
+
+    public enum GameState
     {
         Playing,
         CardSelection,

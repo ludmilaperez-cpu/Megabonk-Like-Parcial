@@ -5,6 +5,7 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 {
     [SerializeField] private string androidAdUnitId;
     [SerializeField] private string iosAdUnitId;
+    [SerializeField] private float coinMultiplier = 1.75f;
 
     private string adUnitId;
 
@@ -19,12 +20,26 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void LoadRewardedAd()
     {
+        if (string.IsNullOrEmpty(adUnitId))
+        {
+            Debug.LogWarning("AdUnitId está vacío en AdsRewarded.");
+            return;
+        }
+
         Advertisement.Load(adUnitId, this);
     }
 
     public void ShowRewardedAd()
     {
+        Time.timeScale = 0f;
         Advertisement.Show(adUnitId, this);
+    }
+
+    private void RestoreTimeScaleAfterAd()
+    {
+        bool isPlaying = GameManager.instance != null && GameManager.instance.GetCurrentState() == GameManager.GameState.Playing;
+
+        Time.timeScale = isPlaying ? 1f : 0f;
     }
 
     #region LoadCallbacks
@@ -34,30 +49,26 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         Debug.Log("Rewarded Ad Loaded");
     }
 
-    public void OnUnityAdsFailedToLoad(
-        string placementId,
-        UnityAdsLoadError error,
-        string message)
+    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
         Debug.LogError($"Failed To Load Ad: {error} - {message}");
     }
 
     #endregion
 
-
     #region ShowCallbacks
 
-    public void OnUnityAdsShowFailure(
-        string placementId,
-        UnityAdsShowError error,
-        string message)
+    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Show Ad Failed: {error} - {message}");
+        RestoreTimeScaleAfterAd();
+        LoadRewardedAd();
     }
 
     public void OnUnityAdsShowStart(string placementId)
     {
         Debug.Log("Ad Started");
+        Time.timeScale = 0f;
     }
 
     public void OnUnityAdsShowClick(string placementId)
@@ -65,25 +76,18 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         Debug.Log("Ad Clicked");
     }
 
-    public void OnUnityAdsShowComplete(
-        string placementId,
-        UnityAdsShowCompletionState showCompletionState)
+    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if (placementId == adUnitId &&
-            showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+        if (placementId == adUnitId && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
         {
-            Debug.Log("Ads Fully Watched...");
-
-            // Aquí das la recompensa al jugador
-            // monedas += 100;
+            Debug.Log($"[Debug] Anuncio completado: multiplicar monedas por x{coinMultiplier}");
         }
 
-        // Carga el siguiente anuncio
+        RestoreTimeScaleAfterAd();
         LoadRewardedAd();
     }
 
     #endregion
 }
-
 
 
