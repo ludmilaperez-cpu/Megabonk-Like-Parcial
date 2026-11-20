@@ -4,7 +4,8 @@ using UnityEngine;
 public enum PlayerStat
 {
     MaxHealth,
-    Speed
+    Speed,
+    Damage
 }
 
 /// <summary>

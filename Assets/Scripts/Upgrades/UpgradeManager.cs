@@ -87,11 +87,7 @@ public static class UpgradeManager
             float bonus = GetBonus(upgrade);
             if (bonus == 0f) continue;
 
-            switch (upgrade.stat)
-            {
-                case PlayerStat.MaxHealth: player.MaxHealth += bonus; break;
-                case PlayerStat.Speed: player.Speed += bonus; break;
-            }
+            player.ModifyStat(upgrade.stat, bonus);
             Debug.Log($"[UpgradeManager] {upgrade.id}: +{bonus} a {upgrade.stat}");
         }
     }

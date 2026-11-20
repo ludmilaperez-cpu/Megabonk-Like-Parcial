@@ -23,10 +23,40 @@ public class PlayerController : MonoBehaviour
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
 
+    [SerializeField] float _damage = 10f;
+    public float Damage { get; set; }
+
     public void ResetStats()
     {
         Speed = _speed;
         MaxHealth = _maxHealth;
+        Damage = _damage;
+    }
+
+    public float GetStat(PlayerStat stat)
+    {
+        switch (stat)
+        {
+            case PlayerStat.MaxHealth: return MaxHealth;
+            case PlayerStat.Speed: return Speed;
+            case PlayerStat.Damage: return Damage;
+            default: return 0f;
+        }
+    }
+
+    public void ModifyStat(PlayerStat stat, float value, bool isPercentage = false)
+    {
+        float delta = isPercentage ? GetStat(stat) * value / 100f : value;
+
+        switch (stat)
+        {
+            case PlayerStat.MaxHealth:
+                MaxHealth += delta;
+                CurrentHealth += delta;
+                break;
+            case PlayerStat.Speed: Speed += delta; break;
+            case PlayerStat.Damage: Damage += delta; break;
+        }
     }
 
     private float _gravity = -9.81f;
@@ -51,6 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         GUI.Label(new Rect(10, 10, 400, 25), $"Vida: {CurrentHealth} / {MaxHealth}");
         GUI.Label(new Rect(10, 30, 400, 25), $"Velocidad: {Speed}");
+        GUI.Label(new Rect(10, 50, 400, 25), $"Daño: {Damage}");
     }
 
     private void Update()

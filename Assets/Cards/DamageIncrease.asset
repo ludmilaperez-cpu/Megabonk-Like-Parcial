@@ -17,5 +17,6 @@ MonoBehaviour:
   cardName: DamageBoost
   effectType: 0
   effectValue: 20
+  isPercentage: 1
   isUnique: 0
   unlockLevel: 0

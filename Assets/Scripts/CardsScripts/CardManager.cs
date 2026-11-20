@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] List<CardSO> deck; //cartas disponibles
     [SerializeField] private List<GameObject> particlesObjects = new List<GameObject>();
 
+    PlayerController player;
     GameObject cardOne, cardTwo, cardThree;
     List<CardSO> alreadySelectedCards = new List<CardSO>();
 
@@ -109,23 +110,22 @@ public class CardManager : MonoBehaviour
 
     public void SelectCard(CardSO selectedCard) //se ejecuta cuando el jugador hace clic en una carta especifica
     {
+        if (!IsSelecting) return;
+
         Debug.Log("Carta seleccionada: " + selectedCard.cardText);
         if (!alreadySelectedCards.Contains(selectedCard))
         {
             alreadySelectedCards.Add(selectedCard);
         }
 
-        switch (selectedCard.effectType)
+        if (player == null) player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
         {
-            case CardEffect.DamageIncrease:
-                Debug.Log("Boost de atq");
-                break;
-            case CardEffect.HealthIncrease:
-                Debug.Log("Boost de health");
-                break;
-            case CardEffect.SpeedIncrease:
-                Debug.Log("Boost de speed");
-                break;
+            player.ModifyStat(selectedCard.Stat, selectedCard.effectValue, selectedCard.isPercentage);
+        }
+        else
+        {
+            Debug.LogError("No se encontro un PlayerController para aplicarle la carta");
         }
 
         GameManager.instance.ChangeState(GameManager.GameState.Playing);
