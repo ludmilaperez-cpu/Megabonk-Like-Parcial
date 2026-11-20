@@ -191,6 +191,8 @@ public class Enemy : MonoBehaviour
 
         DropCoin();
 
+        ItemDropper.TryDrop(transform.position); 
+
         Destroy(gameObject);
     }
 

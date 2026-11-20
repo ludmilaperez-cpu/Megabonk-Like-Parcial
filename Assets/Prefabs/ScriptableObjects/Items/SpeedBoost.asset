@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f01, type: 3}
   m_Name: SpeedBoost
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  id: SpeedBoost
   itemName: Speed Boost
   icon: {fileID: 0}
   modifierValue: 0.2
+  price: 0
+  dropPrefab: {fileID: 3032370960340921688, guid: 51699afad8e0a4a4ab067ec76fda150b, type: 3}
+  unlockedByDefault: 1

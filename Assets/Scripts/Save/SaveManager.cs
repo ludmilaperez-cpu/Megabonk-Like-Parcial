@@ -18,6 +18,7 @@ public class SaveManager
     {
         public float coins;
         public List<UpgradeSave> upgrades = new List<UpgradeSave>();
+        public List<string> unlockedItems = new List<string>();
     }
 
     const string SAVE_FILE_NAME = "SaveData.json";

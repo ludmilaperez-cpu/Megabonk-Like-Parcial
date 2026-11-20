@@ -18,6 +18,7 @@ public class ResetSaveButton : MonoBehaviour
         SaveManager.ResetAll();
         EventManager.RaiseCoinsChanged(0f);   // actualiza el display de monedas
         UpgradeManager.NotifyChanged();       // actualiza precios y botones de la store
+        ItemShop.NotifyChanged();             // vuelve a bloquear los items comprados
         Debug.Log("[ResetSaveButton] Datos guardados reseteados");
     }
 }
