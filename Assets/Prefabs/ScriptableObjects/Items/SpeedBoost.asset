@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: SpeedBoost
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   id: SpeedBoost
-  itemName: Speed Boost
+  itemName: Raton de juguete
+  desc: 'Raton: Aun siendo falsos hacen que quiera perseguirlos aun mas, en la ciudad
+    desgraciadamente se hizo ilegal cazar ratones luego de que lograran conseguir
+    un gatoabogado que luchara por sus derechos y que fuera alergico a las ratas.
+
+    +0.2
+    de velocidad'
   icon: {fileID: 0}
   modifierValue: 0.2
-  price: 0
   dropPrefab: {fileID: 3032370960340921688, guid: 51699afad8e0a4a4ab067ec76fda150b, type: 3}
+  price: 0
   unlockedByDefault: 1

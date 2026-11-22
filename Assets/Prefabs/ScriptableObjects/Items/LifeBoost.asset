@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   id: LifeBoost
   itemName: hierba de gato
+  desc: "Hierba para gatos: Muy adictiva, me revilatiza cada que la consumo, de donde
+    vengo la prohibieron porque las generaciones mayores gastaban todos los ahorros
+    que tenian para consumirla, por suerte en el campo no es muy dificil encontrarla.
+    \n+15 de vida maxima."
   icon: {fileID: 0}
   modifierValue: 15
-  price: 50
   dropPrefab: {fileID: 6570687104821388076, guid: 898289d6875d21b459d0851c16febac6, type: 3}
+  price: 50
   unlockedByDefault: 0

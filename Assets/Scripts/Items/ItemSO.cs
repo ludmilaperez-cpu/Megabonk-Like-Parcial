@@ -10,6 +10,9 @@ public class ItemSO : ScriptableObject
     [Tooltip("Identificador unico, se usa para guardar si el item esta comprado")]
     public string id;
     public string itemName;
+    [TextArea(2, 5)]
+    [Tooltip("Descripcion que se muestra en la store al tocar Desc.")]
+    public string desc;
     public Sprite icon;
 
     [Tooltip("Cuanto modifica el stat (ej: +2 de velocidad)")]
