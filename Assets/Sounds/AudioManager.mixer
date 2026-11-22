@@ -6,7 +6,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Main menu
+  m_Name: UI
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: b82cee5db52c4574687899d5de5776ca
   m_Children: []
@@ -88,8 +88,8 @@ AudioMixerGroupController:
   m_GroupID: 04a67c28438824a4a9ef9665bc08798c
   m_Children:
   - {fileID: -1315700200912053942}
-  - {fileID: 1218768097394509799}
   - {fileID: -3583995724802473733}
+  - {fileID: 1218768097394509799}
   m_Volume: 22418d64472982e41875dab4f62ff6e2
   m_Pitch: c643029d7b0be454e8b1a8da9dd9ae2b
   m_Send: 00000000000000000000000000000000

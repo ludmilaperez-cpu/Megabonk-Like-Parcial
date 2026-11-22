@@ -9,16 +9,13 @@ public class FocusAttack : BossAttack
     {
         Vector3 playerPos = boss.Player.position;
 
-        Vector3 direction =
-            (playerPos - boss.transform.position).normalized;
+        Vector3 direction =(playerPos - boss.transform.position).normalized;
 
         direction.y = 0f;
 
         for (int i = 1; i <= projectileCount; i++)
         {
-            Vector3 targetPos =
-                boss.transform.position +
-                direction * spacing * i;
+            Vector3 targetPos =boss.transform.position +direction * spacing * i;
 
             boss.SpawnProjectile(targetPos);
         }

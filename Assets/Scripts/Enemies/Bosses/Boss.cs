@@ -18,16 +18,14 @@ public class Boss : MonoBehaviour
 
     public Transform Player => player;
 
-    private void Start()
+    private void Start() 
     {
-        GameObject playerObj =
-            GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj =GameObject.FindGameObjectWithTag("Player");
 
-        if (playerObj != null)
-            player = playerObj.transform;
+        if (playerObj != null) player = playerObj.transform;
     }
 
-    private void Update()
+    private void Update() //persigue al player
     {
         if (player == null)
             return;
@@ -36,7 +34,7 @@ public class Boss : MonoBehaviour
 
         attackTimer += Time.deltaTime;
 
-        if (attackTimer >= attackCooldown)
+        if (attackTimer >= attackCooldown) //atq luego de cd
         {
             attackTimer = 0f;
 
@@ -46,30 +44,21 @@ public class Boss : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        Vector3 direction =
-            (player.position - transform.position).normalized;
+        Vector3 direction = (player.position - transform.position).normalized;
 
         direction.y = 0f;
 
-        transform.position +=
-            direction *
-            moveSpeed *
-            Time.deltaTime;
+        transform.position += direction * moveSpeed * Time.deltaTime;
 
         if (direction.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(direction);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            transform.rotation =
-                Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,rotationSpeed * Time.deltaTime);
         }
     }
 
-    private void ExecuteRandomAttack()
+    private void ExecuteRandomAttack() //comprueba si hay atqs y elige uno aleatorio del array
     {
         if (attacks == null || attacks.Length == 0)
         {
@@ -77,29 +66,22 @@ public class Boss : MonoBehaviour
             return;
         }
 
-        int randomAttack =
-            Random.Range(0, attacks.Length);
+        int randomAttack =Random.Range(0, attacks.Length);
 
         if (attacks[randomAttack] == null)
         {
-            Debug.LogError(
-                "Ataque " + randomAttack + " no asignado en el Inspector.");
+            Debug.LogError("Ataque " + randomAttack + " no asignado en el Inspector.");
             return;
         }
 
         attacks[randomAttack].Execute(this);
     }
 
-    public void SpawnProjectile(Vector3 targetPosition)
+    public void SpawnProjectile(Vector3 targetPosition) //nuevo proyectil y le dice su destino
     {
-        GameObject projectile =
-            Instantiate(
-                projectilePrefab,
-                Vector3.zero,
-                Quaternion.identity);
+        GameObject projectile =Instantiate(projectilePrefab,Vector3.zero,Quaternion.identity);
 
-        BossProjectile proj =
-            projectile.GetComponent<BossProjectile>();
+        BossProjectile proj =projectile.GetComponent<BossProjectile>();
 
         if (proj != null)
         {
@@ -107,7 +89,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDestroy() //avisa al spawner que el boss murio
     {
         BossSpawner spawner =
             FindObjectOfType<BossSpawner>();

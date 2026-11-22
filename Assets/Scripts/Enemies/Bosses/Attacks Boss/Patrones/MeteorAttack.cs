@@ -13,16 +13,9 @@ public class MeteorAttack : BossAttack
 
         for (int i = 0; i < meteorCount; i++)
         {
-            Vector2 randomCircle =
-                Random.insideUnitCircle.normalized *
-                Random.Range(minRadius, maxRadius);
+            Vector2 randomCircle = Random.insideUnitCircle.normalized * Random.Range(minRadius, maxRadius);
 
-            Vector3 targetPosition =
-                playerPosition +
-                new Vector3(
-                    randomCircle.x,
-                    0f,
-                    randomCircle.y);
+            Vector3 targetPosition =playerPosition +new Vector3(randomCircle.x,0f,randomCircle.y);
 
             boss.SpawnProjectile(targetPosition);
         }

@@ -15,8 +15,7 @@ public class ChaseMeteorAttack : BossAttack
     {
         for (int i = 0; i < meteorCount; i++)
         {
-            Vector3 targetPosition =
-                boss.Player.position;
+            Vector3 targetPosition =boss.Player.position;
 
             boss.SpawnProjectile(targetPosition);
 

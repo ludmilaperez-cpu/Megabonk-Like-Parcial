@@ -34,8 +34,7 @@ public class BossProjectile : MonoBehaviour
     private IEnumerator FallAttack()
     {
         //marca roja en el suelo
-        GameObject warning = Instantiate(
-            warningPrefab,targetPosition + Vector3.up * 0.05f, Quaternion.Euler(90f, 0f, 0f));
+        GameObject warning = Instantiate(warningPrefab,targetPosition + Vector3.up * 0.05f, Quaternion.Euler(90f, 0f, 0f));
 
         yield return new WaitForSeconds(0.6f);
 
@@ -62,10 +61,7 @@ public class BossProjectile : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hits =
-            Physics.OverlapSphere(
-                transform.position,
-                explosionRadius);
+        Collider[] hits =Physics.OverlapSphere(transform.position,explosionRadius);
 
         foreach (Collider hit in hits)
         {
