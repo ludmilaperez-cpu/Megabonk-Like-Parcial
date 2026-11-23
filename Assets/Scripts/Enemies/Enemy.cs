@@ -28,6 +28,8 @@ public class AttackStrategy : IEnemyStrategy //de ataque
 #endregion
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] float _health;
+    private float _currentHealth;
 
     [Header("Flyweight - Shared Enemy Data")] //flyweight, los datos compartidos por los enemigos se almacenan en un ScriptableObject para evitar duplicar info                                       
     [SerializeField] private EnemyData enemyData;
@@ -63,6 +65,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        _currentHealth = _health;
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player"); //busca al player
 
         if (playerObj != null) player = playerObj.transform;
@@ -182,6 +186,16 @@ public class Enemy : MonoBehaviour
         if (waveSpawner != null && waveSpawner.currentWaveIndex < waveSpawner.waves.Length)
         {
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+        }
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        _currentHealth -= dmg;
+
+        if (_currentHealth <= 0)
+        {
+            Die();
         }
     }
 
