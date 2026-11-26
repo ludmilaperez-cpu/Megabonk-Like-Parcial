@@ -12,6 +12,7 @@ public class UIAudioManager : MonoBehaviour
     [SerializeField] private AudioClip closeSound;
     [SerializeField] private AudioClip openMenuSound;
 
+
     private void Awake()
     {
         if (Instance == null)

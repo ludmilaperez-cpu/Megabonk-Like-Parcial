@@ -4,7 +4,9 @@ using UnityEngine.SceneManagement;
 public class MenuSystem : MonoBehaviour
 {
     [SerializeField] private GameObject panelSeguro;
+    [SerializeField] private GameObject panelSeguro2;
     [SerializeField] private Pausa pausa;
+
 
     public void Play()
     {
@@ -21,6 +23,10 @@ public class MenuSystem : MonoBehaviour
     public void Exit()
     {
         panelSeguro.SetActive(true);
+    }
+    public void DeleteData()
+    {
+        panelSeguro2.SetActive(true);
     }
     public void Credits() 
     {
@@ -59,5 +65,6 @@ public class MenuSystem : MonoBehaviour
     public void No()
     {
         panelSeguro.SetActive(false);
+        panelSeguro2.SetActive(false);
     }
 }

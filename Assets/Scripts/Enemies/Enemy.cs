@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
     };
 
     private Transform player;
+    private PlayerController playerController;
     private float attackTimer;
     private int damage;
 
@@ -67,9 +68,9 @@ public class Enemy : MonoBehaviour
     {
         _currentHealth = _health;
 
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player"); //busca al player
-
-        if (playerObj != null) player = playerObj.transform;
+        // Busca el PlayerController directamente: la camara tambien tiene el tag Player
+        playerController = FindFirstObjectByType<PlayerController>();
+        if (playerController != null) player = playerController.transform;
 
         chaseStrategy = new ChaseStrategy(); //inicia estrategias enemigos
         attackStrategy = new AttackStrategy();
@@ -128,10 +129,7 @@ public class Enemy : MonoBehaviour
         {
             attackTimer = 0f;
 
-            Debug.Log("Enemy attacks for " + damage);
-
-            // player.GetComponent<PlayerHealth>()
-            //.TakeDamage(damage);
+            if (playerController != null) playerController.TakeDamage(damage);
         }
     }
 

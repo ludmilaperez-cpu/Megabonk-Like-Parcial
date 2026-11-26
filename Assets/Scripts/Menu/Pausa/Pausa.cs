@@ -23,6 +23,7 @@ public class Pausa : MonoBehaviour
     private void Update()
     {
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) return;
+        if (GameManager.instance != null && GameManager.instance.GetCurrentState() >= GameManager.GameState.GameOver) return;
 
         if (!enPausa) Pausar();
         else if (UsaScreens && ScreenStack.Instance.Count > 2) ScreenStack.Instance.Pop();

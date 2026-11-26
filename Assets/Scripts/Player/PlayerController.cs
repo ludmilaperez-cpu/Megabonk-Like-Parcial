@@ -59,6 +59,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsDead { get; private set; }
+
+    public void TakeDamage(float amount)
+    {
+        if (IsDead || amount <= 0f) return;
+
+        CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
+        if (CurrentHealth <= 0f) Die();
+    }
+
+    private void Die()
+    {
+        IsDead = true;
+        if (GameManager.instance != null)
+            GameManager.instance.ChangeState(GameManager.GameState.GameOver);
+    }
+
     private float _gravity = -9.81f;
     [SerializeField] float _gravityMultiplier;
     private float _velocity;

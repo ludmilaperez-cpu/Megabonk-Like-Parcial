@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject winScreen;
 
     public static GameManager instance;
 
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
+
+        if (winScreen != null)
+            winScreen.SetActive(false);
     }
 
     public int GetCurrentLevel()
@@ -65,6 +69,12 @@ public class GameManager : MonoBehaviour
                 if (gameOverPanel != null)
                     gameOverPanel.SetActive(true);
                 break;
+
+            case GameState.Victory:
+                Time.timeScale = 0f;
+                if (winScreen != null)
+                    winScreen.SetActive(true);
+                break;
         }
     }
 
@@ -94,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         Playing,
         CardSelection,
-        GameOver
+        GameOver,
+        Victory
     }
 }
