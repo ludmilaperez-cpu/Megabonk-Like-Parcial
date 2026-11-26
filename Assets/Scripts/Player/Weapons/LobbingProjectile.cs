@@ -8,6 +8,7 @@ public class LobbingProjectile : BulletController
     [SerializeField] float _explosionRange;
     
     private Vector3 _startPos;
+    private bool _drawExplosion;
 
     protected override void Start()
     {
@@ -36,6 +37,10 @@ public class LobbingProjectile : BulletController
 
         if (currentTarget != null)
         {
+            _drawExplosion = true;
+
+            //Agregar feedback al instanciar particulas o algo :v
+
             Collider[] enemies = Physics.OverlapSphere(transform.position, _explosionRange, _colliderLayer);
 
             for (int i = 0; i < enemies.Length; i++)
@@ -80,11 +85,21 @@ public class LobbingProjectile : BulletController
         yield return null;
     }
 
+    protected void OnDrawGizmos()
+    {
+        if (_drawExplosion)
+        {
+            Gizmos.color = Color.orange;
+            Gizmos.DrawSphere(transform.position, _explosionRange);
+        }
+    }
+
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
 
         Gizmos.color = Color.hotPink;
         Gizmos.DrawSphere(transform.position, _explosionRange);
+
     }
 }

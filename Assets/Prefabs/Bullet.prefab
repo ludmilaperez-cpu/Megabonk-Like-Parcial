@@ -238,9 +238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96905eab44af71448bca889da69f746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletController
-  _enemyLayer:
+  _colliderLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   _maxLifetime: 3
   _target: {fileID: 0}
   _hitRange: 0.2

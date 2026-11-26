@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   moveSpeed: 3
   rotationSpeed: 10
-  attackRange: 10
+  attackRange: 1
   attackCooldown: 1
   separationRadius: 1.5
   separationStrength: 3
