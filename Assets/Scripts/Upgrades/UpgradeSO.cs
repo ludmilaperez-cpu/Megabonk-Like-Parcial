@@ -1,17 +1,13 @@
 using UnityEngine;
 
-/// <summary>Stat del player al que le suma un upgrade.</summary>
 public enum PlayerStat
 {
     MaxHealth,
     Speed,
-    Damage
+    Damage,
+    AttackSpeed
 }
 
-/// <summary>
-/// Definicion de un upgrade comprable en la store. Los assets tienen que estar en
-/// Assets/Resources/Upgrades para que el UpgradeManager los encuentre.
-/// </summary>
 [CreateAssetMenu(fileName = "UpgradeNuevo", menuName = "Upgrades/Upgrade")]
 public class UpgradeSO : ScriptableObject
 {
@@ -24,6 +20,9 @@ public class UpgradeSO : ScriptableObject
 
     [Tooltip("X: cuanto suma al stat cada compra")]
     public float valuePerLevel = 10f;
+
+    [Tooltip("Si esta marcado, X es un porcentaje del stat base (25 = +25% por compra) en vez de un valor fijo")]
+    public bool isPercentage;
 
     [Tooltip("N: precio de la primera compra")]
     public float basePrice = 50f;

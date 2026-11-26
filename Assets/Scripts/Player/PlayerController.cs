@@ -26,8 +26,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _damage = 10f;
     public float Damage { get; set; }
 
+    [Tooltip("Multiplicador de velocidad de ataque (1 = normal, 1.5 = 50% mas rapido)")]
+    [SerializeField] float _attackSpeed = 1f;
+    public float AttackSpeed { get; set; }
+
+    /// <summary>Daño actual respecto al base: 1 = sin mejoras, 1.5 = +50%.</summary>
+    public float DamageMultiplier => _damage > 0f ? Damage / _damage : 1f;
+
     public void ResetStats()
     {
+        AttackSpeed = _attackSpeed;
         Speed = _speed;
         MaxHealth = _maxHealth;
         Damage = _damage;
@@ -40,6 +48,7 @@ public class PlayerController : MonoBehaviour
             case PlayerStat.MaxHealth: return MaxHealth;
             case PlayerStat.Speed: return Speed;
             case PlayerStat.Damage: return Damage;
+            case PlayerStat.AttackSpeed: return AttackSpeed;
             default: return 0f;
         }
     }
@@ -56,6 +65,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerStat.Speed: Speed += delta; break;
             case PlayerStat.Damage: Damage += delta; break;
+            case PlayerStat.AttackSpeed: AttackSpeed += delta; break;
         }
     }
 
@@ -99,6 +109,7 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(10, 10, 400, 25), $"Vida: {CurrentHealth} / {MaxHealth}");
         GUI.Label(new Rect(10, 30, 400, 25), $"Velocidad: {Speed}");
         GUI.Label(new Rect(10, 50, 400, 25), $"Daño: {Damage}");
+        GUI.Label(new Rect(10, 70, 400, 25), $"Vel. ataque: {AttackSpeed:0.00}");
     }
 
     private void Update()

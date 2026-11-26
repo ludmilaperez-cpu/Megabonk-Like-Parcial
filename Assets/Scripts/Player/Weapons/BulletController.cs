@@ -72,7 +72,7 @@ public class BulletController : MonoBehaviour
     public void SetupStats(GunController gc)
     {
         _speed = gc.speed;
-        _damage = gc.damage;
+        _damage = gc.CurrentDamage;
     }
 
     public void SetupDirection(Vector3 dir)

@@ -40,6 +40,17 @@ public class GunController : WeaponController
         }
     }
 
+    // Daño del arma multiplicado por las mejoras de daño del player (store y cartas)
+    public float CurrentDamage => _playerController != null ? damage * _playerController.DamageMultiplier : damage;
+
+    // Velocidad de ataque del player: acorta el cooldown entre disparos
+    protected override void Attack()
+    {
+        base.Attack();
+        if (_playerController != null && _playerController.AttackSpeed > 0f)
+            currentCooldown = cooldown / _playerController.AttackSpeed;
+    }
+
     protected void LateUpdate()
     {
         transform.rotation = Quaternion.identity;
