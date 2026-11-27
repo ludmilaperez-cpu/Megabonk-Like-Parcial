@@ -37,17 +37,11 @@ public class BossSpawner : MonoBehaviour
         if (bossIndex >= bosses.Length)
             bossIndex = 0;
 
-        Vector3 spawnPos =
-            player.position +
-            Random.onUnitSphere * spawnRadius;
+        Vector3 spawnPos =player.position +Random.onUnitSphere * spawnRadius;
 
         spawnPos.y = player.position.y;
 
-        currentBoss =
-            Instantiate(
-                bosses[bossIndex],
-                spawnPos,
-                Quaternion.identity);
+        currentBoss =Instantiate(bosses[bossIndex],spawnPos,Quaternion.identity);
 
         bossIndex++;
     }

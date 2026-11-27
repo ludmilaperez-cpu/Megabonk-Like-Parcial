@@ -151,34 +151,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6182162820492919152, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4975565648107225986}
-    - targetCorrespondingSourceObject: {fileID: 6159077726828138870, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7990124006287824310}
   m_SourcePrefab: {fileID: 100100000, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
---- !u!1 &3490017643159060487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6159077726828138870, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
-  m_PrefabInstance: {fileID: 7284141394280255857}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7990124006287824310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3490017643159060487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f18622de055e15459b75975eec290fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  _health: 0
-  enemyData: {fileID: 0}
-  enemyLevel: 0
-  experienceOrbPrefab: {fileID: 8527858623051449106, guid: c1037643572d45a45a887f1327f3d884, type: 3}
-  experienceReward: 400
-  coinPrefab: {fileID: 0}
-  experienceDropChance: 0.7
 --- !u!1 &3520984046657114113 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6182162820492919152, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
@@ -196,10 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f18622de055e15459b75975eec290fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  _health: 0
+  _health: 50
   enemyData: {fileID: 11400000, guid: c5d7fb8d43ad0f243a0b080b6b9d9f44, type: 2}
-  enemyLevel: 0
+  enemyLevel: 1
   experienceOrbPrefab: {fileID: 8527858623051449106, guid: c1037643572d45a45a887f1327f3d884, type: 3}
-  experienceReward: 500
-  coinPrefab: {fileID: 0}
+  experienceReward: 200
+  coinPrefab: {fileID: 6911636043852728658, guid: 40d4c13bbb326da4aa22a78037926e7f, type: 3}
   experienceDropChance: 0.7
